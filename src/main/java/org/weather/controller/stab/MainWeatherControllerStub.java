@@ -2,7 +2,7 @@ package org.weather.controller.stab;
 
 import org.weather.controller.MainWeatherController;
 
-public class MainWeatherControllerStab implements MainWeatherController {
+public class MainWeatherControllerStub implements MainWeatherController {
     @Override
     public String findLocationByName(String name) {
         return null;
