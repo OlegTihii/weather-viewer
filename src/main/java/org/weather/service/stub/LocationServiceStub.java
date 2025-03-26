@@ -8,6 +8,7 @@ import java.util.List;
 
 @Service
 public class LocationServiceStub implements LocationService {
+
     private List<LocationDto> locations;
 
     @Override
