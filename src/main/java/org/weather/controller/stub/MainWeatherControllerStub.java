@@ -8,7 +8,6 @@ import org.weather.service.LocationService;
 import org.weather.service.stub.LocationServiceStub;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class MainWeatherControllerStub implements MainWeatherController {
