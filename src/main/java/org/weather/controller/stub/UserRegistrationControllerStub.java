@@ -1,4 +1,4 @@
-package org.weather.controller.stab;
+package org.weather.controller.stub;
 
 import org.weather.controller.UserRegistrationController;
 
