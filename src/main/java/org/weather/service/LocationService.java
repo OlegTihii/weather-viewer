@@ -1,15 +1,15 @@
 package org.weather.service;
 
-import org.weather.entity.Location;
+import org.weather.dto.LocationDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface LocationService {
 
-    List<Location> findLocationByName(String name);
+    List<LocationDto> findLocationByName(String name);
 
-    Optional<Location> findLocationByCoordinates(double lat, double lon);
+    Optional<LocationDto> findLocationByCoordinates(double lat, double lon);
 
     boolean addLocation(int id);
 

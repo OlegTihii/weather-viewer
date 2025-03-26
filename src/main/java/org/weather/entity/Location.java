@@ -22,14 +22,14 @@ public class Location {
     private long id;
 
     @Column(name = "name", nullable = false)
-    private String name;
+    private String city;
 
     @Column(name = "userId", nullable = false)
     private long userId;
 
     @Column(name = "latitude")
-    private BigDecimal Latitude;
+    private BigDecimal latitude;
 
     @Column(name = "longitude")
-    private BigDecimal Longitude;
+    private BigDecimal longitude;
 }
