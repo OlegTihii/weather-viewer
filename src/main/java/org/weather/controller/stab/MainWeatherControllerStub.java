@@ -12,4 +12,11 @@ public class MainWeatherControllerStub implements MainWeatherController {
     public String findLocationByCoordinates(double lat, double lon) {
         return null;
     }
+
+    @Override
+    public String deleteLocation(int id) {
+        return "You deleted location: " + id;
+    }
+
+
 }

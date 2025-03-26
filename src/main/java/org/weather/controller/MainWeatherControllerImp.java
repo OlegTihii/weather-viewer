@@ -20,4 +20,9 @@ public class MainWeatherControllerImp implements MainWeatherController {
 
         return "homePage";
     }
+
+    @Override
+    public String deleteLocation(int id) {
+        return null;
+    }
 }
