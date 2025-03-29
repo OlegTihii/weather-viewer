@@ -17,7 +17,7 @@ public class LocationDto {
     private BigDecimal  latitude;
     private BigDecimal longitude;
     private String country;
-    private short temperature;
-    private byte humidity;
+    private Integer temperature;
+    private Integer humidity;
 
 }

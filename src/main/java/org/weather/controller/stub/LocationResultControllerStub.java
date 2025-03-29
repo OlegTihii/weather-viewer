@@ -1,8 +1,8 @@
 package org.weather.controller.stub;
 
-import org.weather.controller.LocationResultController;
+import org.weather.controller.SearchLocationResultController;
 
-public class LocationResultControllerStub implements LocationResultController {
+public class LocationResultControllerStub implements SearchLocationResultController {
     @Override
     public String findLocationsByName(String name) {
         return "Location weather " + name;

@@ -14,15 +14,15 @@ public class LocationServiceStub implements LocationService {
     @Override
     public List<LocationDto> findLocationByName(String name) {
 
-        return locations = List.of(LocationDto.builder().city("Dublin").country("RU").humidity((byte) 67).temperature((short) 10).build(),
-                LocationDto.builder().city("Moscow").country("RU").humidity((byte) 22).temperature((short) 17).build(),
-                LocationDto.builder().city("New Vasyuki").country("RU").humidity((byte) 43).temperature((short) 28).build());
+        return locations = List.of(LocationDto.builder().city("Dublin").country("RU").humidity(67).temperature(10).build(),
+                LocationDto.builder().city("Moscow").country("RU").humidity(22).temperature(17).build(),
+                LocationDto.builder().city("New Vasyuki").country("RU").humidity(43).temperature(28).build());
 
     }
 
     @Override
-    public LocationDto findLocationByCoordinates(double lat, double lon) {
-        return LocationDto.builder().city("Dublin").temperature((short) 22).country("RU").humidity((byte) 22).build();
+    public LocationDto findLocationByCoordinates(int lat, int lon) {
+        return LocationDto.builder().city("Dublin").temperature(22).country("RU").humidity(22).build();
     }
 
 

@@ -8,7 +8,7 @@ public interface LocationService {
 
     List<LocationDto> findLocationByName(String name);
 
-    LocationDto findLocationByCoordinates(double lat, double lon);
+    LocationDto findLocationByCoordinates(int lat, int lon);
 
     boolean addLocation(int id);
 

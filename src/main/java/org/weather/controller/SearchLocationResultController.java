@@ -1,6 +1,6 @@
 package org.weather.controller;
 
-public interface LocationResultController {
+public interface SearchLocationResultController {
 
     String findLocationsByName(String name);
 
