@@ -8,7 +8,7 @@ public interface MainWeatherController {
 
     String findLocation(String city, Integer lat, Integer lon, Model model);
 
-    String getPersonWeatherCards(User user, Session session);
+    String getPersonWeatherCards(User user, Session session, Model model);
 
     String deleteLocation(int id);
 }

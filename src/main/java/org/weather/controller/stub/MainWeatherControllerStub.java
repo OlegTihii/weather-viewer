@@ -9,24 +9,37 @@ import org.weather.dto.LocationDto;
 import org.weather.entity.Session;
 import org.weather.entity.User;
 import org.weather.service.LocationService;
+import org.weather.service.UserHomePageService;
+import org.weather.service.stub.UserServiceStub;
 
 import java.util.List;
 
 @Controller
 public class MainWeatherControllerStub implements MainWeatherController {
     private final LocationService locationServiceStub;
+    private final UserHomePageService userServiceStub;
 
-    public MainWeatherControllerStub(LocationService locationServiceStub) {
+    public MainWeatherControllerStub(LocationService locationServiceStub, UserServiceStub userServiceStub) {
         this.locationServiceStub = locationServiceStub;
-    }
-
-    @Override
-    public String getPersonWeatherCards(User user, Session session) {
-        return null;
+        this.userServiceStub = userServiceStub;
     }
 
     @Override
     @GetMapping("/")
+    public String getPersonWeatherCards(User user, Session session, Model model) {
+        //у нас уже есть авторизация и нам нужно передать в сервис данные
+        //авторизации и вернуть карточка погоды
+
+        List<LocationDto> locationsForPerson = userServiceStub.findLocationsForPerson(user);
+        model.addAttribute("cities", locationsForPerson);
+
+        return "homePage";
+    }
+
+
+    //todo должен делать редирект или как лучше обработать?
+    @Override
+    @GetMapping("/search")
     public String findLocation(@RequestParam(name = "city", required = false) String city,
                                @RequestParam(name = "lat", required = false) Integer lat,
                                @RequestParam(name = "lon", required = false) Integer lon,
