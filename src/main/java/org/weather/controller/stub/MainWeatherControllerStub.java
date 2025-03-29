@@ -1,6 +1,5 @@
 package org.weather.controller.stub;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,17 +20,17 @@ public class MainWeatherControllerStub implements MainWeatherController {
 
     @Override
     @GetMapping("/")
-    public String findLocationByName(@RequestParam("city") String city, Model model) {
+    public String findLocationByName(@RequestParam(name = "city", required = false) String city, Model model) {
         List<LocationDto> cities = locationServiceStub.findLocationByName("Dublin");
-        model.addAttribute(cities);
+        model.addAttribute("cities", cities);
         return "homePage";
     }
 
     @Override
     @GetMapping("/test")
     public String findLocationByCoordinates(double lat, double lon, Model model) {
-        LocationDto locationByCoordinates = locationServiceStub.findLocationByCoordinates(33.3, 55.5);
-        model.addAttribute(locationByCoordinates);
+        LocationDto location = locationServiceStub.findLocationByCoordinates(33.3, 55.5);
+        model.addAttribute("location", location);
         return "homePage";
     }
 
