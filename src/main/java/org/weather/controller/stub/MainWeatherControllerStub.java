@@ -37,10 +37,9 @@ public class MainWeatherControllerStub implements MainWeatherController {
         } else if (lat != null && lon != null) {
             LocationDto location = locationServiceStub.findLocationByCoordinates(lat, lon);
             model.addAttribute("location", location);
+        } else {
+            model.addAttribute("error", "please enter the correct name or coordinates");
         }
-//        else {
-//            model.addAttribute("error", "please enter the correct name or coordinates");
-//        }
 
         return "searchPage";
     }
