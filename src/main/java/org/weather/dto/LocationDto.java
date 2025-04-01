@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class LocationDto {
 
     private String city;
-    private BigDecimal  latitude;
+    private BigDecimal latitude;
     private BigDecimal longitude;
     private String country;
     private Integer temperature;

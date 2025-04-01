@@ -44,13 +44,15 @@ public class MainWeatherControllerStub implements MainWeatherController {
                                @RequestParam(name = "lat", required = false) Integer lat,
                                @RequestParam(name = "lon", required = false) Integer lon,
                                Model model) {
-        if (city != null) {
-            List<LocationDto> cities = locationServiceStub.findLocationByName("Dublin");
+        if (city != null && !city.isEmpty()) {
+            List<LocationDto> cities = locationServiceStub.findLocationByName(city);
             model.addAttribute("cities", cities);
-        } else if (lat != null && lon != null) {
+        }
+        else if (lat != null && lon != null) {
             LocationDto location = locationServiceStub.findLocationByCoordinates(lat, lon);
             model.addAttribute("location", location);
-        } else {
+         }
+        else {
             model.addAttribute("error", "please enter the correct name or coordinates");
         }
 

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.weather.dto.LocationDto;
 import org.weather.service.LocationService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -14,15 +15,33 @@ public class LocationServiceStub implements LocationService {
     @Override
     public List<LocationDto> findLocationByName(String name) {
 
-        return locations = List.of(LocationDto.builder().city("Dublin").country("RU").humidity(67).temperature(10).build(),
-                LocationDto.builder().city("Moscow").country("RU").humidity(22).temperature(17).build(),
-                LocationDto.builder().city("New Vasyuki").country("RU").humidity(43).temperature(28).build());
+        return locations = List.of(LocationDto.builder()
+                        .city("Dublin")
+                        .country("RU")
+                        .build(),
+                LocationDto.builder()
+                        .city("Moscow")
+                        .country("RU")
+                        .latitude(BigDecimal.valueOf(8.5050281))
+                        .longitude(BigDecimal.valueOf(125.9771179))
+                        .build(),
+                LocationDto.builder()
+                        .city("New Vasyuki")
+                        .country("RU")
+                        .latitude(BigDecimal.valueOf(-31.4249815))
+                        .longitude(BigDecimal.valueOf(-62.0840299))
+                        .build());
 
     }
 
     @Override
     public LocationDto findLocationByCoordinates(int lat, int lon) {
-        return LocationDto.builder().city("Dublin").temperature(22).country("RU").humidity(22).build();
+        return LocationDto.builder()
+                .city("Dublin")
+                .temperature(22)
+                .country("RU")
+                .humidity(22)
+                .build();
     }
 
 
