@@ -8,6 +8,6 @@
         <tagDatabase tag="v.1.0.0"/>
     </changeSet>
 
-    <include file="2025-03-06-create-table.xml" relativeToChangelogFile="true"/>
+    <include file="2025-04-01-create-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
