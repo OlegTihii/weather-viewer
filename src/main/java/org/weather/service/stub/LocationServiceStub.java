@@ -6,6 +6,7 @@ import org.weather.service.LocationService;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LocationServiceStub implements LocationService {
@@ -46,8 +47,8 @@ public class LocationServiceStub implements LocationService {
 
 
     @Override
-    public boolean addLocation(int id) {
-        return false;
+    public Optional<LocationDto> addLocation(int id) {
+        return null;
     }
 
     @Override

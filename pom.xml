@@ -89,10 +89,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>6.6.11.Final</version>
-            <type>pom</type>
+            <version>6.2.5.Final</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>

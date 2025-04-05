@@ -1,5 +1,6 @@
-package org.weather.controller.stub;
+package org.weather.controller.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,18 +11,20 @@ import org.weather.entity.Session;
 import org.weather.entity.User;
 import org.weather.service.LocationService;
 import org.weather.service.UserService;
-import org.weather.service.stub.UserServiceStub;
+import org.weather.service.impl.LocationServiceImpl;
+import org.weather.service.impl.UserServiceImpl;
 
 import java.util.List;
 
 @Controller
-public class MainWeatherControllerStub implements MainWeatherController {
-    private final LocationService locationServiceStub;
-    private final UserService userServiceStub;
+public class MainWeatherControllerImpl implements MainWeatherController {
+    private final LocationService locationService;
+    private final UserService userHomePageService;
 
-    public MainWeatherControllerStub(LocationService locationServiceStub, UserServiceStub userServiceStub) {
-        this.locationServiceStub = locationServiceStub;
-        this.userServiceStub = userServiceStub;
+    @Autowired
+    public MainWeatherControllerImpl(LocationServiceImpl locationService, UserServiceImpl userService) {
+        this.locationService = locationService;
+        this.userHomePageService = userService;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class MainWeatherControllerStub implements MainWeatherController {
         //у нас уже есть авторизация и нам нужно передать в сервис данные
         //авторизации и вернуть карточка погоды
 
-       // List<LocationDto> locationsForPerson = userServiceStub.findLocationsForPerson(user);
+      //  List<LocationDto> locationsForPerson = userHomePageService.findLocationsForPerson(user);
       //  model.addAttribute("cities", locationsForPerson);
 
         return "homePage";
@@ -45,14 +48,12 @@ public class MainWeatherControllerStub implements MainWeatherController {
                                @RequestParam(name = "lon", required = false) Integer lon,
                                Model model) {
         if (city != null && !city.isEmpty()) {
-            List<LocationDto> cities = locationServiceStub.findLocationByName(city);
+            List<LocationDto> cities = locationService.findLocationByName(city);
             model.addAttribute("cities", cities);
-        }
-        else if (lat != null && lon != null) {
-            LocationDto location = locationServiceStub.findLocationByCoordinates(lat, lon);
+        } else if (lat != null && lon != null) {
+            LocationDto location = locationService.findLocationByCoordinates(lat, lon);
             model.addAttribute("location", location);
-         }
-        else {
+        } else {
             model.addAttribute("error", "please enter the correct name or coordinates");
         }
 
@@ -64,6 +65,5 @@ public class MainWeatherControllerStub implements MainWeatherController {
     public String deleteLocation(int id) {
         return "You deleted location: " + id;
     }
-
 
 }
