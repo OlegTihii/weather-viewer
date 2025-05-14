@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "Sessions")
+@Table(name = "sessions")
 @Getter
 @Setter
 @Builder
@@ -21,7 +21,7 @@ public class Session {
     private UUID id;
 
     @Column(name = "userId", nullable = false)
-    private long userId;
+    private int userId;
 
     @Column(name = "expiresAt")
     private LocalDateTime expiresAt;

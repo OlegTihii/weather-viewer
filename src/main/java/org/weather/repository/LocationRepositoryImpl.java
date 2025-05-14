@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public class LocationRepositoryImpl implements LocationRepository {
 
+
     private final SessionFactory sessionFactory;
 
     @Autowired
@@ -30,31 +31,31 @@ public class LocationRepositoryImpl implements LocationRepository {
     }
 
     @Override
-    public List<Location> findLocationByUserId(int userId) {
-        Session session = getCurrentSession();
+    public List<Location> findAllByUserId(int userId) {
+        Session session = sessionFactory.getCurrentSession();
         Query<Location> findAllByUserId = session.createQuery("SELECT l FROM Location l " +
-                "WHERE l.userId = :userId", Location.class).setParameter(userId, userId);
+                "WHERE l.userId = :userId", Location.class).setParameter("userId", userId);
 
         return findAllByUserId.list();
     }
 
     @Override
-    public List<Location> findLocationByName(String location) {
+    public List<Location> findAllByName(String location) {
         return null;
     }
 
     @Override
-    public Optional<Location> findLocationByCoordinates(int lat, int lon) {
+    public Optional<Location> findByCoordinates(int lat, int lon) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<Location> saveLocation(int id) {
+    public Optional<Location> save(int id) {
         return Optional.empty();
     }
 
     @Override
-    public boolean deleteLocation(int id) {
+    public boolean deleteById(int id) {
         return false;
     }
 }

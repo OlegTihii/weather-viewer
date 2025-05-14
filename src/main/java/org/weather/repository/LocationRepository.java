@@ -9,13 +9,13 @@ public interface LocationRepository {
 
     Optional<Location> findById(int id);
 
-    List<Location> findLocationByUserId(int userId);
+    List<Location> findAllByUserId(int userId);
 
-    List<Location> findLocationByName(String location);
+    List<Location> findAllByName(String location);
 
-    Optional<Location> findLocationByCoordinates(int lat, int lon);
+    Optional<Location> findByCoordinates(int lat, int lon);
 
-    Optional<Location> saveLocation(int id);
+    Optional<Location> save(int id);
 
-    boolean deleteLocation(int id);
+    boolean deleteById(int id);
 }

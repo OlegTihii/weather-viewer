@@ -14,14 +14,14 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+  //  private final UserRepository userRepository;
 
     //todo где лучше объявлять list? тут или в методе?
     List<LocationDto> locations = new ArrayList<>();
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+      //  this.userRepository = userRepository;
     }
 
     @Override

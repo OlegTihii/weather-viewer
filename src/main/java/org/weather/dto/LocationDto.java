@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 public class LocationDto {
 
     private String city;
@@ -19,5 +18,17 @@ public class LocationDto {
     private String country;
     private Integer temperature;
     private Integer humidity;
+
+    @Override
+    public String toString() {
+        return "LocationDto{" +
+                "city='" + city + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", country='" + country + '\'' +
+                ", temperature=" + temperature +
+                ", humidity=" + humidity +
+                '}';
+    }
 
 }

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface LocationService {
 
-    List<LocationDto> findLocationByName(String name);
+    List<LocationDto> listLocationsByUserId(int id);
 
     LocationDto findLocationByCoordinates(int lat, int lon);
 

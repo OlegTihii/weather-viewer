@@ -9,5 +9,7 @@
     </changeSet>
 
     <include file="2025-04-01-create-table.xml" relativeToChangelogFile="true"/>
+    <include file="2025-05-14-add-test-data.xml" relativeToChangelogFile="true"/>
+
 
 </databaseChangeLog>

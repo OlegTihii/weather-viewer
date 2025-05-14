@@ -3,6 +3,7 @@ package org.weather.controller.stub;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.weather.controller.MainWeatherController;
 import org.weather.dto.LocationDto;
@@ -15,6 +16,7 @@ import org.weather.service.stub.UserServiceStub;
 import java.util.List;
 
 @Controller
+@RequestMapping("/stub")
 public class MainWeatherControllerStub implements MainWeatherController {
     private final LocationService locationServiceStub;
     private final UserService userServiceStub;
@@ -45,7 +47,7 @@ public class MainWeatherControllerStub implements MainWeatherController {
                                @RequestParam(name = "lon", required = false) Integer lon,
                                Model model) {
         if (city != null && !city.isEmpty()) {
-            List<LocationDto> cities = locationServiceStub.findLocationByName(city);
+            List<LocationDto> cities = locationServiceStub.listLocationsByUserId(66);
             model.addAttribute("cities", cities);
         }
         else if (lat != null && lon != null) {
