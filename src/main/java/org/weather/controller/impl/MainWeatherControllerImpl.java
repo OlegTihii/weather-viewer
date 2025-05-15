@@ -24,7 +24,8 @@ public class MainWeatherControllerImpl implements MainWeatherController {
     private final UserService userHomePageService;
 
     @Autowired
-    public MainWeatherControllerImpl(LocationService locationService, @Qualifier("userServiceImpl") UserService userService) {
+    public MainWeatherControllerImpl(@Qualifier("locationServiceImpl") LocationService locationService,
+                                     @Qualifier("userServiceImpl") UserService userService) {
         this.locationService = locationService;
         this.userHomePageService = userService;
     }
