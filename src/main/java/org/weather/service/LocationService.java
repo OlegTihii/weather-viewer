@@ -1,17 +1,18 @@
 package org.weather.service;
 
-import org.weather.dto.LocationDto;
+import org.weather.dto.WeatherDto;
+import org.weather.entity.Location;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface LocationService {
 
-    List<LocationDto> listLocationsByUserId(int id);
+    List<Location> listLocationsByUserId(int id);
 
-    LocationDto findLocationByCoordinates(int lat, int lon);
+    WeatherDto findLocationByCoordinates(int lat, int lon);
 
-    Optional<LocationDto> addLocation(int id);
+    Optional<WeatherDto> addLocation(int id);
 
     boolean deleteLocation(int id);
 

@@ -1,9 +1,8 @@
 package org.weather.service.stub;
 
 import org.springframework.stereotype.Service;
-import org.weather.dto.LocationDto;
+import org.weather.dto.WeatherDto;
 import org.weather.dto.UserDto;
-import org.weather.entity.User;
 import org.weather.service.UserService;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.List;
 @Service
 public class UserServiceStub implements UserService {
     //todo где лучше объявлять list? тут или в методе?
-    List<LocationDto> locations = new ArrayList<>();
+    List<WeatherDto> locations = new ArrayList<>();
 
 
 //    public List<LocationDto> findLocationsForPerson(User user) {

@@ -13,7 +13,6 @@ import java.util.Optional;
 @Repository
 public class LocationRepositoryImpl implements LocationRepository {
 
-
     private final SessionFactory sessionFactory;
 
     @Autowired
@@ -34,7 +33,8 @@ public class LocationRepositoryImpl implements LocationRepository {
     public List<Location> findAllByUserId(int userId) {
         Session session = sessionFactory.getCurrentSession();
         Query<Location> findAllByUserId = session.createQuery("SELECT l FROM Location l " +
-                "WHERE l.userId = :userId", Location.class).setParameter("userId", userId);
+                "WHERE l.user.id = :userId", Location.class);
+        findAllByUserId.setParameter("userId", userId);
 
         return findAllByUserId.list();
     }

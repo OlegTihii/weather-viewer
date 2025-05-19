@@ -2,9 +2,8 @@ package org.weather.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.weather.dto.LocationDto;
+import org.weather.dto.WeatherDto;
 import org.weather.dto.UserDto;
-import org.weather.entity.User;
 import org.weather.repository.UserRepository;
 import org.weather.service.UserService;
 
@@ -17,7 +16,7 @@ public class UserServiceImpl implements UserService {
   //  private final UserRepository userRepository;
 
     //todo где лучше объявлять list? тут или в методе?
-    List<LocationDto> locations = new ArrayList<>();
+    List<WeatherDto> locations = new ArrayList<>();
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {

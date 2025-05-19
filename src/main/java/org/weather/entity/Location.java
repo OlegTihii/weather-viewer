@@ -23,23 +23,16 @@ public class Location {
     @Column(name = "name", nullable = false)
     private String city;
 
-    @Column(name = "\"userId\"", nullable = false)
-    private int userId;
-
     @Column(name = "latitude")
     private BigDecimal latitude;
 
     @Column(name = "longitude")
     private BigDecimal longitude;
 
-    @Override
-    public String toString() {
-        return "Location{" +
-                "id=" + id +
-                ", city='" + city + '\'' +
-                ", userId=" + userId +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
-    }
+    @ManyToOne
+    @JoinColumn(name = "\"userId\"", nullable = false)
+    private User user;
+
 }
+
+
