@@ -53,6 +53,33 @@
         </createTable>
     </changeSet>
 
+
+    <changeSet id="5-rename-sessions-table" author="Oleg">
+        <renameTable oldTableName="Sessions" newTableName="sessions"/>
+    </changeSet>
+
+    <changeSet id="6-rename-user-table" author="Oleg">
+        <renameTable oldTableName="Users" newTableName="users"/>
+    </changeSet>
+
+    <changeSet id="7-add-fk-location-user" author="Oleg">
+        <addForeignKeyConstraint baseTableName="locations"
+                                 baseColumnNames="userId"
+                                 constraintName="fk_locations_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="8-add-fk-sessions-user" author="Oleg">
+        <addForeignKeyConstraint baseTableName="sessions"
+                                 baseColumnNames="userId"
+                                 constraintName="fk_sessions_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
 </databaseChangeLog>
 
 

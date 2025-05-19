@@ -3,21 +3,20 @@ package org.weather.controller.stub;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.weather.controller.MainWeatherController;
-import org.weather.dto.LocationDto;
 import org.weather.entity.Session;
 import org.weather.entity.User;
 import org.weather.service.LocationService;
-import org.weather.service.UserHomePageService;
+import org.weather.service.UserService;
 import org.weather.service.stub.UserServiceStub;
 
-import java.util.List;
-
 @Controller
+@RequestMapping("/stub")
 public class MainWeatherControllerStub implements MainWeatherController {
     private final LocationService locationServiceStub;
-    private final UserHomePageService userServiceStub;
+    private final UserService userServiceStub;
 
     public MainWeatherControllerStub(LocationService locationServiceStub, UserServiceStub userServiceStub) {
         this.locationServiceStub = locationServiceStub;
@@ -30,8 +29,8 @@ public class MainWeatherControllerStub implements MainWeatherController {
         //у нас уже есть авторизация и нам нужно передать в сервис данные
         //авторизации и вернуть карточка погоды
 
-        List<LocationDto> locationsForPerson = userServiceStub.findLocationsForPerson(user);
-        model.addAttribute("cities", locationsForPerson);
+        // List<LocationDto> locationsForPerson = userServiceStub.findLocationsForPerson(user);
+        //  model.addAttribute("cities", locationsForPerson);
 
         return "homePage";
     }
@@ -40,21 +39,20 @@ public class MainWeatherControllerStub implements MainWeatherController {
     //todo должен делать редирект или как лучше обработать?
     @Override
     @GetMapping("/search")
-    public String findLocation(@RequestParam(name = "city", required = false) String city,
-                               @RequestParam(name = "lat", required = false) Integer lat,
-                               @RequestParam(name = "lon", required = false) Integer lon,
+    public String findLocation(User user,
+                               @RequestParam(required = false) String city,
                                Model model) {
-        if (city != null && !city.isEmpty()) {
-            List<LocationDto> cities = locationServiceStub.findLocationByName(city);
-            model.addAttribute("cities", cities);
-        }
-        else if (lat != null && lon != null) {
-            LocationDto location = locationServiceStub.findLocationByCoordinates(lat, lon);
-            model.addAttribute("location", location);
-         }
-        else {
-            model.addAttribute("error", "please enter the correct name or coordinates");
-        }
+//        if (city != null && !city.isEmpty()) {
+//            List<WeatherDto> cities = locationServiceStub.listLocationsByUserId(66);
+//            model.addAttribute("cities", cities);
+//        }
+//        else if (lat != null && lon != null) {
+//            WeatherDto location = locationServiceStub.findLocationByCoordinates(lat, lon);
+//            model.addAttribute("location", location);
+//         }
+//        else {
+//            model.addAttribute("error", "please enter the correct name or coordinates");
+//        }
 
         return "searchPage";
     }

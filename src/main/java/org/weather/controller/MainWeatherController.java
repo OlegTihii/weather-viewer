@@ -6,7 +6,7 @@ import org.weather.entity.User;
 
 public interface MainWeatherController {
 
-    String findLocation(String city, Integer lat, Integer lon, Model model);
+    String findLocation(User user, String city, Model model);
 
     String getPersonWeatherCards(User user, Session session, Model model);
 

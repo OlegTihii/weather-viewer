@@ -1,18 +1,16 @@
 package org.weather.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "Sessions")
+@Table(name = "sessions")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Session {
@@ -23,7 +21,7 @@ public class Session {
     private UUID id;
 
     @Column(name = "userId", nullable = false)
-    private long userId;
+    private int userId;
 
     @Column(name = "expiresAt")
     private LocalDateTime expiresAt;

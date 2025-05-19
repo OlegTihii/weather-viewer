@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+    <changeSet id="1-insert-test-users" author="Oleg">
+        <insert tableName="users">
+            <column name="id" valueNumeric="1"/>
+            <column name="login" value="Ivan"/>
+            <column name="password" value="12345"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" valueNumeric="2"/>
+            <column name="login" value="anna"/>
+            <column name="password" value="112233"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="2-insert-test-locations" author="Oleg">
+        <insert tableName="locations">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Москва"/>
+            <column name="userId" valueNumeric="1"/>
+            <column name="latitude" valueNumeric="55.755825"/>
+            <column name="longitude" valueNumeric="37.617298"/>
+        </insert>
+        <insert tableName="locations">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Санкт-Петербург"/>
+            <column name="userId" valueNumeric="1"/>
+            <column name="latitude" valueNumeric="59.9311"/>
+            <column name="longitude" valueNumeric="30.3609"/>
+        </insert>
+        <insert tableName="locations">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Новосибирск"/>
+            <column name="userId" valueNumeric="2"/>
+            <column name="latitude" valueNumeric="55.0084"/>
+            <column name="longitude" valueNumeric="82.9357"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="3-insert-test-sessions" author="Oleg">
+    <insert tableName="sessions">
+        <column name="id" value="111e4567-e89b-12d3-a456-426614174000"/>
+        <column name="userId" valueNumeric="1"/>
+        <column name="expiresAt" valueDate="2025-12-31T23:59:59"/>
+    </insert>
+    <insert tableName="sessions">
+        <column name="id" value="222e4567-e89b-12d3-a456-426614174000"/>
+        <column name="userId" valueNumeric="2"/>
+        <column name="expiresAt" valueDate="2025-12-01T12:00:00"/>
+    </insert>
+    </changeSet>
+</databaseChangeLog>
