@@ -3,6 +3,7 @@ package org.weather.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.weather.dto.LocationDto;
 import org.weather.dto.WeatherDto;
@@ -23,7 +24,7 @@ public class WeatherFacadeServiceImpl implements WeatherFacadeService {
     private final ExternalWeatherService externalWeatherService;
 
     @Autowired
-    public WeatherFacadeServiceImpl(LocationService locationService, ExternalWeatherService externalWeatherService) {
+    public WeatherFacadeServiceImpl(@Qualifier("locationServiceImpl") LocationService locationService, ExternalWeatherService externalWeatherService) {
         this.locationService = locationService;
         this.externalWeatherService = externalWeatherService;
     }
@@ -43,7 +44,7 @@ public class WeatherFacadeServiceImpl implements WeatherFacadeService {
     @Override
     public List<LocationDto> getLocationsByCity(int userId, String city) {
         WeatherInfo weatherInfo = externalWeatherService.getLocationsByCity(city);
-
+        log.info("A:LG:J {}", weatherInfo);
         return null;
     }
 }
