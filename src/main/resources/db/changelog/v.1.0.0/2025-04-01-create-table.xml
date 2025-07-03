@@ -6,7 +6,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
 
     <changeSet id="1-create-users-table" author="Oleg">
-        <createTable tableName="Users">
+        <createTable tableName="users">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -20,7 +20,7 @@
     </changeSet>
 
     <changeSet id="2-create-locations-table" author="Oleg">
-        <createTable tableName="Locations">
+        <createTable tableName="locations">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -40,7 +40,7 @@
     </changeSet>
 
     <changeSet id="3-create-sessions-table" author="Oleg">
-        <createTable tableName="Sessions">
+        <createTable tableName="sessions">
             <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -53,16 +53,7 @@
         </createTable>
     </changeSet>
 
-
-    <changeSet id="5-rename-sessions-table" author="Oleg">
-        <renameTable oldTableName="Sessions" newTableName="sessions"/>
-    </changeSet>
-
-    <changeSet id="6-rename-user-table" author="Oleg">
-        <renameTable oldTableName="Users" newTableName="users"/>
-    </changeSet>
-
-    <changeSet id="7-add-fk-location-user" author="Oleg">
+    <changeSet id="4-add-fk-location-user" author="Oleg">
         <addForeignKeyConstraint baseTableName="locations"
                                  baseColumnNames="userId"
                                  constraintName="fk_locations_user"
@@ -71,7 +62,7 @@
                                  onDelete="CASCADE"/>
     </changeSet>
 
-    <changeSet id="8-add-fk-sessions-user" author="Oleg">
+    <changeSet id="5-add-fk-sessions-user" author="Oleg">
         <addForeignKeyConstraint baseTableName="sessions"
                                  baseColumnNames="userId"
                                  constraintName="fk_sessions_user"
