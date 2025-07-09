@@ -1,5 +1,6 @@
 package org.weather.controller.stub;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ public class MainWeatherControllerStub implements MainWeatherController {
     private final LocationService locationServiceStub;
     private final UserService userServiceStub;
 
-    public MainWeatherControllerStub(LocationService locationServiceStub, UserServiceStub userServiceStub) {
+    public MainWeatherControllerStub(@Qualifier("locationServiceStub") LocationService locationServiceStub, UserServiceStub userServiceStub) {
         this.locationServiceStub = locationServiceStub;
         this.userServiceStub = userServiceStub;
     }
