@@ -3,7 +3,6 @@ package org.weather.repository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +26,9 @@ public class UserRepositoryImpl implements UserRepository {
         this.resourceTransactionManager = resourceTransactionManager;
     }
 
-
     private Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
-
 
     @Override
     public Optional<User> findById(int id) {
@@ -39,16 +36,17 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findByLogin(String name) {
+    public Optional<User> findByLoginAndPassword(User user) {
         Session session = getCurrentSession();
         Query<User> findByName = session.createQuery("SELECT u FROM User u " +
-                "WHERE u.login = :name", User.class).setParameter("name", name);
+                "WHERE u.login = :name AND u.password = :password", User.class);
+        findByName.setParameter("name", user.getLogin());
+        findByName.setParameter("password", user.getPassword());
 
+        LOGGER.info("Finding by name: {}", findByName.uniqueResultOptional());
         return findByName.uniqueResultOptional();
     }
-
     @Override
-    @Transactional
     public Optional<User> saveUser(User user) {
 
         Session session = getCurrentSession();

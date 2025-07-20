@@ -1,7 +1,7 @@
 package org.weather.service.stub;
 
 import org.springframework.stereotype.Service;
-import org.weather.dto.UserRegistrationDto;
+import org.weather.dto.UserLoginOrRegistrationDto;
 import org.weather.dto.WeatherDto;
 import org.weather.dto.UserDto;
 import org.weather.service.UserService;
@@ -21,13 +21,14 @@ public class UserServiceStub implements UserService {
 //                LocationDto.builder().city("Moscow").country("RU").humidity(22).temperature(17).build(),
 //                LocationDto.builder().city("Old Vasyuki").country("RU").humidity(43).temperature(28).build());
 //    }
+
     @Override
-    public UserDto login(UserDto userDto) {
+    public UserDto checkLogin(UserLoginOrRegistrationDto userLoginOrRegistrationDto) {
         return null;
     }
 
     @Override
-    public UserDto registration(UserRegistrationDto userRegistrationDto) {
+    public UserDto registration(UserLoginOrRegistrationDto userLoginOrRegistrationDto) {
         return null;
     }
 }

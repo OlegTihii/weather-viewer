@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.weather.dto.UserDto;
-import org.weather.dto.UserRegistrationDto;
+import org.weather.dto.UserLoginOrRegistrationDto;
 import org.weather.entity.User;
 
 @Mapper(componentModel = "spring")
@@ -18,5 +18,5 @@ public interface UserMapper {
     UserDto toDto(User user);
 
     @Mapping(source = "username", target = "login")
-    User toEntity(UserRegistrationDto userRegistrationDto);
+    User toEntity(UserLoginOrRegistrationDto userLoginOrRegistrationDto);
 }
