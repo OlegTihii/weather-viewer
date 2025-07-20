@@ -12,7 +12,7 @@ public class UserRegistrationControllerStub implements UserRegistrationControlle
     }
 
     @Override
-    public String registration(String username, String password, String confirmPassword) {
+    public String registration(String username, String password, String confirmPassword, Model model) {
         return "";
     }
 

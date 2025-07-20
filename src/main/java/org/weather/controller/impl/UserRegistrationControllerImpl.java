@@ -39,7 +39,8 @@ public class UserRegistrationControllerImpl implements UserRegistrationControlle
     @PostMapping
     public String registration(@RequestParam String username,
                                @RequestParam String password,
-                               @RequestParam String confirmPassword
+                               @RequestParam String confirmPassword,
+                               Model model
     ) {
 
         if (!password.equals(confirmPassword)) {

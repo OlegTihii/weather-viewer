@@ -6,6 +6,6 @@ public interface UserRegistrationController {
 
     String showRegistrationForm(Model model);
 
-    String registration(String username, String password, String confirmPassword);
+    String registration(String username, String password, String confirmPassword, Model model);
 
 }
