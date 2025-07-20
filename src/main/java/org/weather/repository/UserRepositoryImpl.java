@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.ResourceTransactionManager;
 import org.weather.entity.User;
 
@@ -46,6 +45,7 @@ public class UserRepositoryImpl implements UserRepository {
         LOGGER.info("Finding by name: {}", findByName.uniqueResultOptional());
         return findByName.uniqueResultOptional();
     }
+
     @Override
     public Optional<User> saveUser(User user) {
 
