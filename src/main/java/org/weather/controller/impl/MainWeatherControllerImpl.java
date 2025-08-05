@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.weather.controller.MainWeatherController;
 import org.weather.dto.LocationDto;
@@ -17,6 +18,7 @@ import org.weather.service.WeatherFacadeService;
 import java.util.List;
 
 @Controller
+@RequestMapping("/")
 public class MainWeatherControllerImpl implements MainWeatherController {
     private static final Logger log = LoggerFactory.getLogger(MainWeatherControllerImpl.class);
     private final WeatherFacadeService weatherFacadeService;

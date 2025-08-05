@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
         if (byLogin.isEmpty()) {
             throw (new UsernameNotFoundException("User not found"));
         }
-        return null;
+        return UserMapper.INSTANCE.toDto(byLogin.get());
     }
 
     @Override

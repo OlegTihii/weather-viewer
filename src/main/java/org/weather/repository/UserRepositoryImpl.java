@@ -17,12 +17,12 @@ public class UserRepositoryImpl implements UserRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserRepositoryImpl.class);
 
     private final SessionFactory sessionFactory;
-    private final ResourceTransactionManager resourceTransactionManager;
+ //   private final ResourceTransactionManager resourceTransactionManager;
 
     @Autowired
     public UserRepositoryImpl(SessionFactory sessionFactory, ResourceTransactionManager resourceTransactionManager) {
         this.sessionFactory = sessionFactory;
-        this.resourceTransactionManager = resourceTransactionManager;
+    //    this.resourceTransactionManager = resourceTransactionManager;
     }
 
     private Session getCurrentSession() {
