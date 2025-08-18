@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.weather.controller.UserRegistrationController;
+import org.weather.dto.UserDto;
 import org.weather.dto.UserLoginOrRegistrationDto;
 import org.weather.service.UserService;
 
@@ -42,6 +43,7 @@ public class UserRegistrationControllerImpl implements UserRegistrationControlle
                                Model model
     ) {
 
+        //todo обработать ошибку что пароли должны быть одинаковые
         if (!password.equals(confirmPassword)) {
             return "sign-up";
         }
@@ -51,6 +53,7 @@ public class UserRegistrationControllerImpl implements UserRegistrationControlle
                 .build();
 
         userService.registration(userLoginOrRegistrationDto);
+
 
         return "homePage";
     }

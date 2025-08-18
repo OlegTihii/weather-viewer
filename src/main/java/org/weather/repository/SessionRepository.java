@@ -6,6 +6,5 @@ import java.util.Optional;
 
 public interface SessionRepository {
     Optional<Session> findBySessionId(String sessionId);
-
-    void save(Session session);
+    Session save(Session session);
 }

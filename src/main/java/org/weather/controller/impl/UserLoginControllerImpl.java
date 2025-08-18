@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.weather.controller.UserLoginController;
 import org.weather.dto.UserLoginOrRegistrationDto;
+import org.weather.repository.SessionRepository;
 import org.weather.service.UserService;
+
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/login")
@@ -25,6 +28,7 @@ public class UserLoginControllerImpl implements UserLoginController {
     @Autowired
     public UserLoginControllerImpl(@Qualifier("UserServiceImpl") UserService userService) {
         this.userService = userService;
+
     }
 
     @Override
@@ -49,8 +53,10 @@ public class UserLoginControllerImpl implements UserLoginController {
         return "sign-in-with-errors";
     }
 
+        String sessionToken = UUID.randomUUID().toString();
 
-        return "homePage";
+
+        return "redirect:/";
     }
 }
 

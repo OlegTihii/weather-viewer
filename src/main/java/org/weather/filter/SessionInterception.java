@@ -8,19 +8,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.weather.entity.Session;
 import org.weather.repository.SessionRepository;
-import org.weather.util.SessionStore;
 
 import java.util.Optional;
 
 @Component
 public class SessionInterception implements HandlerInterceptor {
 
-    private final SessionStore sessionStore;
     private final SessionRepository sessionRepository;
 
     @Autowired
-    public SessionInterception(SessionStore sessionStore, SessionRepository sessionRepository) {
-        this.sessionStore = sessionStore;
+    public SessionInterception(SessionRepository sessionRepository) {
         this.sessionRepository = sessionRepository;
     }
 
@@ -47,6 +44,6 @@ public class SessionInterception implements HandlerInterceptor {
             }
         }
         response.sendRedirect("/login");
-        return true;
+        return false;
     }
 }

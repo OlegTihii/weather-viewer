@@ -58,7 +58,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(sessionInterception)
-                .addPathPatterns("/**")        // перехватывать все запросы
-                .excludePathPatterns("/login", "/registration"); // исключить логин и ресурсы
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login", "/registration");
     }
 }
