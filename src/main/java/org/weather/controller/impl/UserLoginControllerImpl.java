@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.weather.controller.UserLoginController;
 import org.weather.dto.UserLoginOrRegistrationDto;
-import org.weather.repository.SessionRepository;
 import org.weather.service.UserService;
 
 import java.util.UUID;
@@ -47,11 +46,11 @@ public class UserLoginControllerImpl implements UserLoginController {
                 .username(username)
                 .password(password)
                 .build();
-    try {
-        userService.checkLogin(userLoginOrRegistrationDto);
-    } catch (UsernameNotFoundException ex){
-        return "sign-in-with-errors";
-    }
+        try {
+            userService.checkLogin(userLoginOrRegistrationDto);
+        } catch (UsernameNotFoundException ex) {
+            return "sign-in-with-errors";
+        }
 
         String sessionToken = UUID.randomUUID().toString();
 

@@ -41,7 +41,15 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public Optional<SessionDto> validateSession(UUID sessionId) {
-        return Optional.empty();
+    @Transactional
+    public boolean validateSession(String sessionId) {
+        UUID uuid = UUID.fromString(sessionId);
+        Optional<Session> bySessionId = sessionRepository.findBySessionId(uuid);
+        return bySessionId.filter(this::isSessionActive).isPresent();
+    }
+
+    private boolean isSessionActive(Session session) {
+        LocalDateTime expiresAt = session.getExpiresAt();
+        return expiresAt.getNano() - LocalDateTime.now().getNano() > 0;
     }
 }

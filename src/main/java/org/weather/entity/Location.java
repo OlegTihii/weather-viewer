@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Location {
 
     @Id

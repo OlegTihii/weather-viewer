@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.weather.entity.Session;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class SessionRepositoryImpl implements SessionRepository {
@@ -21,7 +22,7 @@ public class SessionRepositoryImpl implements SessionRepository {
     }
 
     @Override
-    public Optional<Session> findBySessionId(String sessionId) {
+    public Optional<Session> findBySessionId(UUID sessionId) {
         return Optional.ofNullable(getCurrentSession().get(Session.class, sessionId));
     }
 

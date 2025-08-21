@@ -36,11 +36,11 @@ public class GlobalExceptionHandler {
         return "sign-up-with-errors.html";
     }
 
-    @ExceptionHandler(Exception.class)
-    public String handleAny(Exception ex, Model model) {
-        model.addAttribute("error", "Произошла непредвиденная ошибка: " + ex.getMessage());
-        return "sign-up-with-errors";
-    }
+//    @ExceptionHandler(Exception.class)
+//    public String handleAny(Exception ex, Model model) {
+//        model.addAttribute("error", "Произошла непредвиденная ошибка: " + ex.getMessage());
+//        return "sign-up-with-errors";
+//    }
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public String handleUsernameNotFound(UsernameNotFoundException e, Model model) {

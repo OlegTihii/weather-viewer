@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface SessionService {
     SessionDto createSession(User user);
-    Optional<SessionDto> validateSession(UUID sessionId);
+    boolean validateSession(String sessionId);
 }
