@@ -13,5 +13,5 @@ import java.util.UUID;
 @Builder
 @ToString
 public class SessionDto {
-   private UUID sessionId;
+   private UUID id;
 }

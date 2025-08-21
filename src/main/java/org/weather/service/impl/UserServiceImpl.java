@@ -7,8 +7,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.ResourceTransactionManager;
+import org.weather.dto.SessionDto;
 import org.weather.dto.UserDto;
 import org.weather.dto.UserLoginOrRegistrationDto;
+import org.weather.dto.UserRegistrationDto;
 import org.weather.entity.User;
 import org.weather.mapper.UserMapper;
 import org.weather.repository.UserRepository;
@@ -47,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto registration(UserLoginOrRegistrationDto userLoginOrRegistrationDto) {
+    public SessionDto registration(UserLoginOrRegistrationDto userLoginOrRegistrationDto) {
         User userEntity = UserMapper.INSTANCE.toEntity(userLoginOrRegistrationDto);
         Optional<User> byLoginAndPassword = userRepository.findByLoginAndPassword(userEntity);
 
@@ -57,9 +59,11 @@ public class UserServiceImpl implements UserService {
 
         //todo  смысл от хибернейта если не сохраняется в сущностях значения
         Optional<User> user = userRepository.saveUser(userEntity);
-        sessionService.createSession(userEntity);
         LOGGER.info("UserServiceImpl | registration | {}", user);
 
-        return UserMapper.INSTANCE.toDto(user.orElseThrow());
+        return sessionService.createSession(userEntity);
+
+
+
     }
 }

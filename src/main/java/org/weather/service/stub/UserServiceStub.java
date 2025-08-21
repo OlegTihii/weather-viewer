@@ -1,9 +1,7 @@
 package org.weather.service.stub;
 
 import org.springframework.stereotype.Service;
-import org.weather.dto.UserLoginOrRegistrationDto;
-import org.weather.dto.WeatherDto;
-import org.weather.dto.UserDto;
+import org.weather.dto.*;
 import org.weather.service.UserService;
 
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ public class UserServiceStub implements UserService {
     }
 
     @Override
-    public UserDto registration(UserLoginOrRegistrationDto userLoginOrRegistrationDto) {
+    public SessionDto registration(UserLoginOrRegistrationDto userLoginOrRegistrationDto) {
         return null;
     }
 }

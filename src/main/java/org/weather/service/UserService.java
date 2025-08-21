@@ -1,12 +1,14 @@
 package org.weather.service;
 
+import org.weather.dto.SessionDto;
 import org.weather.dto.UserDto;
 import org.weather.dto.UserLoginOrRegistrationDto;
+import org.weather.dto.UserRegistrationDto;
 
 public interface UserService {
 
     UserDto checkLogin(UserLoginOrRegistrationDto userLoginOrRegistrationDto);
 
-    UserDto registration(UserLoginOrRegistrationDto userLoginOrRegistrationDto);
+    SessionDto registration(UserLoginOrRegistrationDto userLoginOrRegistrationDto);
 
 }

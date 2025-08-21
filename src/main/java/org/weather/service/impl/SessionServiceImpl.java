@@ -34,9 +34,9 @@ public class SessionServiceImpl implements SessionService {
                 .expiresAt(LocalDateTime.now().plusHours(2))
                 .build();
 
-        LOGGER.info("SessionServiceImpl sessionEntity {}", session);
         //todo почему сессия не сохраняется в юзере?
         session = sessionRepository.save(session);
+        LOGGER.info("SessionServiceImpl sessionEntity {}", session);
         return SessionMapper.INSTANCE.toDto(session);
     }
 

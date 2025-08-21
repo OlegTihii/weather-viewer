@@ -1,5 +1,6 @@
 package org.weather.controller.stub;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.ui.Model;
 import org.weather.controller.UserRegistrationController;
 
@@ -12,7 +13,7 @@ public class UserRegistrationControllerStub implements UserRegistrationControlle
     }
 
     @Override
-    public String registration(String username, String password, String confirmPassword, Model model) {
+    public String registration(String username, String password, String confirmPassword, Model model, HttpServletResponse response) {
         return "";
     }
 
