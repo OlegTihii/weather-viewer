@@ -29,4 +29,9 @@ public class UserServiceStub implements UserService {
     public SessionDto registration(UserLoginOrRegistrationDto userLoginOrRegistrationDto) {
         return null;
     }
+
+    @Override
+    public SessionDto authorisation(UserLoginOrRegistrationDto userLoginOrRegistrationDto) {
+        return null;
+    }
 }

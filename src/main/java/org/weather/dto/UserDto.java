@@ -4,12 +4,10 @@ import lombok.*;
 
 @Getter
 @Setter
-@EqualsAndHashCode
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
-
     private String userName;
 }

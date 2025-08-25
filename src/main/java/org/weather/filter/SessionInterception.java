@@ -3,16 +3,16 @@ package org.weather.filter;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.weather.service.SessionService;
 
+import java.io.IOException;
+
 @Component
 public class SessionInterception implements HandlerInterceptor {
-
 
     private final SessionService sessionService;
 
@@ -24,26 +24,29 @@ public class SessionInterception implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
-                             Object handler) {
+                             Object handler) throws IOException {
 
-        //todo какого лешего false????
         Cookie cookie = extractSessionCookie(request);
-        boolean b = sessionService.validateSession(cookie.getValue());
-        return b;
+        if (cookie == null){
+            response.sendRedirect("/login");
+            return true;
+        }
+
+        return sessionService.validateSession(cookie.getValue());
     }
 
-
+    //todo возвращать null не самая лучшая идея?
     private Cookie extractSessionCookie(HttpServletRequest request) {
         if (request == null) {
             return null;
         }
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("CurrentSession")) {
-                return cookie;
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals("CurrentSession")) {
+                    return cookie;
+                }
             }
         }
         return null;
     }
-
-
 }

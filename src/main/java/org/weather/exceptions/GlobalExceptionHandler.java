@@ -31,11 +31,10 @@ public class GlobalExceptionHandler {
         } else {
             model.addAttribute("error", e.getMessage());
         }
-
         //todo таймлиф не подхватывает страницу
         return "sign-up-with-errors.html";
     }
-
+//    todo обработать общую ошибку
 //    @ExceptionHandler(Exception.class)
 //    public String handleAny(Exception ex, Model model) {
 //        model.addAttribute("error", "Произошла непредвиденная ошибка: " + ex.getMessage());

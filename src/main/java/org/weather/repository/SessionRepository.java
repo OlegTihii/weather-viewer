@@ -9,4 +9,8 @@ public interface SessionRepository {
     Optional<Session> findBySessionId(UUID sessionId);
 
     Session save(Session session);
+
+    void remove(UUID uuid);
+
+    boolean checkSessionByUser(Session session);
 }
