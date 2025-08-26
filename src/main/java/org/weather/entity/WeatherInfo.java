@@ -1,30 +1,5 @@
-//package org.weather.entity;
-//
-//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-//import lombok.*;
-//
-//import java.math.BigDecimal;
-//
-//@Getter
-//@Setter
-//@Builder
-//@ToString
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@JsonIgnoreProperties(ignoreUnknown = true)
-//public class WeatherInfo {
-//
-//    private String name;
-//    private BigDecimal lat;
-//    private BigDecimal lon;
-//    private String country;
-//    private Integer temperature;
-//    private Integer humidity;
-//
-//
-//}
-package org.weather.entity;
 
+package org.weather.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;

@@ -1,5 +1,6 @@
 package org.weather.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -11,11 +12,12 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 @ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LocationDto {
 
-    String city;
-    BigDecimal latitude;
-    BigDecimal longitude;
+    String name;
+    BigDecimal lat;
+    BigDecimal lon;
     String country;
     String state;
 }

@@ -66,7 +66,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
-                .baseUrl("https://api.openweathermap.org/data/2.5")
+                .baseUrl("https://api.openweathermap.org/")
                 .defaultHeader("Content-Type", "application/json")
                 .build();
     }
