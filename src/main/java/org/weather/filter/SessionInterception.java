@@ -3,7 +3,6 @@ package org.weather.filter;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -27,7 +26,7 @@ public class SessionInterception implements HandlerInterceptor {
                              Object handler) throws IOException {
 
         Cookie cookie = extractSessionCookie(request);
-        if (cookie == null){
+        if (cookie == null) {
             response.sendRedirect("/login");
             return true;
         }

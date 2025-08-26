@@ -1,7 +1,7 @@
 package org.weather.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jakarta.servlet.http.Cookie;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,9 +17,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
+@Slf4j
 public class WeatherFacadeServiceImpl implements WeatherFacadeService {
 
-    private static final Logger log = LoggerFactory.getLogger(WeatherFacadeServiceImpl.class);
     private final LocationService locationService;
     private final ExternalWeatherService externalWeatherService;
 
@@ -28,7 +28,6 @@ public class WeatherFacadeServiceImpl implements WeatherFacadeService {
         this.locationService = locationService;
         this.externalWeatherService = externalWeatherService;
     }
-
 
     @Override
     public List<WeatherDto> getWeatherForUserLocation(int userId) {
@@ -41,10 +40,12 @@ public class WeatherFacadeServiceImpl implements WeatherFacadeService {
         return null;
     }
 
+    //todo Что-то часто запрос в БД с поиском Юзера то по id то по куки. Может его можно куда-то записать?
     @Override
-    public List<LocationDto> getLocationsByCity(int userId, String city) {
+    public List<LocationDto> getLocationsByCity(String userCookie, String city) {
+
         WeatherInfo weatherInfo = externalWeatherService.getLocationsByCity(city);
-        log.info("A:LG:J {}", weatherInfo);
+        log.info("getLocationsByCity {}", weatherInfo);
         return null;
     }
 }

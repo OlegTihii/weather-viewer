@@ -1,5 +1,8 @@
 package org.weather.controller.impl;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +22,8 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
+@Slf4j
 public class MainWeatherControllerImpl implements MainWeatherController {
-    private static final Logger log = LoggerFactory.getLogger(MainWeatherControllerImpl.class);
     private final WeatherFacadeService weatherFacadeService;
 
     @Autowired
@@ -42,17 +45,27 @@ public class MainWeatherControllerImpl implements MainWeatherController {
 
     @Override
     @GetMapping("/search")
-    public String findLocation(User user,
+    public String findLocation(HttpServletRequest request,
                                @RequestParam(required = false) String city,
                                Model model) {
 
-        if (city != null && !city.isEmpty() && !city.isBlank()) {
-            List<LocationDto> cities = weatherFacadeService.getLocationsByCity(user.getId(), city);
+        log.info("findLocation start");
+
+        String userCookies = null;
+        for (Cookie cookie : request.getCookies()) {
+            if (cookie.getName().equals("CurrentSession")) {
+                userCookies = cookie.getValue();
+            }
+        }
+
+        if (city != null && !city.isBlank()) {
+            List<LocationDto> cities = weatherFacadeService.getLocationsByCity(userCookies, city);
             model.addAttribute("cities", cities);
         } else {
             model.addAttribute("error", "please enter the correct name or coordinates");
         }
 
+        log.info("findLocation finish");
         return "searchPage";
     }
 

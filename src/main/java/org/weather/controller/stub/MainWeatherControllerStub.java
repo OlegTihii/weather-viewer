@@ -1,5 +1,6 @@
 package org.weather.controller.stub;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,11 @@ public class MainWeatherControllerStub implements MainWeatherController {
     }
 
     @Override
+    public String findLocation(HttpServletRequest request, String city, Model model) {
+        return "";
+    }
+
+    @Override
     @GetMapping("/")
     public String getPersonWeatherCards(User user, Session session, Model model) {
         //у нас уже есть авторизация и нам нужно передать в сервис данные
@@ -38,7 +44,7 @@ public class MainWeatherControllerStub implements MainWeatherController {
 
 
     //todo должен делать редирект или как лучше обработать?
-    @Override
+
     @GetMapping("/search")
     public String findLocation(User user,
                                @RequestParam(required = false) String city,

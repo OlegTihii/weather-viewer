@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -55,11 +56,18 @@ public class WebConfig implements WebMvcConfigurer {
         registry.viewResolver(resolver);
     }
 
-    //todo убрать коммент
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(sessionInterception)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login", "/registration");
+    }
+
+    @Bean
+    public WebClient webClient() {
+        return WebClient.builder()
+                .baseUrl("https://api.openweathermap.org/data/2.5")
+                .defaultHeader("Content-Type", "application/json")
+                .build();
     }
 }

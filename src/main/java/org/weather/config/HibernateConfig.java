@@ -30,8 +30,8 @@ public class HibernateConfig {
         Properties props = new Properties();
         props.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         props.put("hibernate.hbm2ddl.auto", "validate");
-        props.put("hibernate.show_sql", "true");
-        props.put("hibernate.format_sql", "true");
+        props.put("hibernate.show_sql", "false");
+        props.put("hibernate.format_sql", "false");
 
         factoryBean.setHibernateProperties(props);
         return factoryBean;
