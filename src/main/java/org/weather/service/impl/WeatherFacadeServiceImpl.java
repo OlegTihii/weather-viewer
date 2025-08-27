@@ -43,7 +43,7 @@ public class WeatherFacadeServiceImpl implements WeatherFacadeService {
     //todo Что-то часто запрос в БД с поиском Юзера то по id то по куки. Может его можно куда-то записать?
     @Override
     public List<LocationDto> getLocationsByCity(String userCookie, String city) {
-        List<WeatherInfo> locationsByCity = externalWeatherService.getLocationsByCity(city);
-        return null;
+        List<LocationDto> locationsByCity = externalWeatherService.getLocationsByCity(city);
+        return locationsByCity;
     }
 }

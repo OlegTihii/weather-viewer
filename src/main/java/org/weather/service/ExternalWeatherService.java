@@ -1,5 +1,6 @@
 package org.weather.service;
 
+import org.weather.dto.LocationDto;
 import org.weather.entity.WeatherInfo;
 
 import java.math.BigDecimal;
@@ -9,7 +10,7 @@ public interface ExternalWeatherService {
 
     WeatherInfo getWeather(BigDecimal lat, BigDecimal lon);
 
-    List<WeatherInfo> getLocationsByCity(String city);
+    List<LocationDto> getLocationsByCity(String city);
 }
 
 

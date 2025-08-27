@@ -30,13 +30,13 @@ public class ExternalWeatherServiceImpl implements ExternalWeatherService {
     }
 
     @Override
-    public List<WeatherInfo> getLocationsByCity(String city) {
+    public List<LocationDto> getLocationsByCity(String city) {
         //   http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid={API key}
         //   https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
         //todo 1. Если города нет, то отправляет null. Возможно косяк
         //todo 2. Токен у всех на виду
         log.info("getLocationsByCity start {}", city);
-        List<LocationDto> weatherInfoList = webClient.get()
+        List<LocationDto> locationDtoList = webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/geo/1.0/direct")
                         .queryParam("q", city)
@@ -54,8 +54,8 @@ public class ExternalWeatherServiceImpl implements ExternalWeatherService {
                 .collectList()
                 .block();
 
-        log.info("getLocationsByCity finish {}", weatherInfoList);
-        return null;
+        log.info("getLocationsByCity finish {}", locationDtoList);
+        return locationDtoList;
     }
 }
 
