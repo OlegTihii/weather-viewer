@@ -50,7 +50,8 @@ public class LocationRepositoryImpl implements LocationRepository {
     }
 
     @Override
-    public Optional<Location> save(int id) {
+    public Optional<Location> save(Location location) {
+        getCurrentSession().persist(location);
         return Optional.empty();
     }
 

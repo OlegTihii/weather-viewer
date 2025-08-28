@@ -1,7 +1,9 @@
 package org.weather.mapper;
 
 import org.mapstruct.Mapper;
-import org.weather.dto.WeatherDto;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
+import org.weather.dto.LocationDto;
 import org.weather.entity.Location;
 
 import java.util.List;
@@ -9,7 +11,18 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface LocationMapper {
 
-    WeatherDto toDto(Location location);
+    LocationMapper INSTANCE = Mappers.getMapper(LocationMapper.class);
 
-    List<WeatherDto> toListDto(List<Location> locations);
+    @Mapping(target = "name", source = "city")
+    @Mapping(target = "lat", source = "latitude")
+    @Mapping(target = "lon", source = "longitude")
+    LocationDto toDto(Location location);
+
+    List<LocationDto> toListDto(List<Location> locations);
+
+
+    @Mapping(target = "city", source = "name")
+    @Mapping(target = "latitude", source = "lat")
+    @Mapping(target = "longitude", source = "lon")
+    Location toEntity(LocationDto locationDto);
 }

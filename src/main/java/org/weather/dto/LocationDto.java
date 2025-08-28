@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 @ToString
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class LocationDto {
 
     String name;

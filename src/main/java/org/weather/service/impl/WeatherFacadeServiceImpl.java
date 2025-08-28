@@ -1,13 +1,11 @@
 package org.weather.service.impl;
 
-import jakarta.servlet.http.Cookie;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.weather.dto.LocationDto;
 import org.weather.dto.WeatherDto;
-import org.weather.entity.Location;
 import org.weather.entity.WeatherInfo;
 import org.weather.service.ExternalWeatherService;
 import org.weather.service.LocationService;
@@ -31,7 +29,7 @@ public class WeatherFacadeServiceImpl implements WeatherFacadeService {
 
     @Override
     public List<WeatherDto> getWeatherForUserLocation(int userId) {
-        List<Location> locations = locationService.listLocationsByUserId(userId);
+        List<LocationDto> locations = locationService.listLocationsByUserId(userId);
         log.info("Locations: {}", locations);
 
         //Надо распаралеллить

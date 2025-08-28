@@ -4,14 +4,16 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
-@Table(name = "locations")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
+@Table(name = "locations")
 public class Location {
 
     @Id
@@ -32,6 +34,18 @@ public class Location {
     @JoinColumn(name = "\"userId\"", nullable = false)
     private User user;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Location location = (Location) o;
+        return Objects.equals(city, location.city) && Objects.equals(latitude, location.latitude) && Objects.equals(longitude, location.longitude) && Objects.equals(user, location.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(city, latitude, longitude, user);
+    }
 }
 
 

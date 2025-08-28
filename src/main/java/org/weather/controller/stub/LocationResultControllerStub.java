@@ -1,6 +1,10 @@
 package org.weather.controller.stub;
 
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.ui.Model;
 import org.weather.controller.SearchLocationResultController;
+
+import java.math.BigDecimal;
 
 public class LocationResultControllerStub implements SearchLocationResultController {
     @Override
@@ -14,8 +18,9 @@ public class LocationResultControllerStub implements SearchLocationResultControl
     }
 
     @Override
-    public String addLocation(int id) {
-        return "You add new location: " + id;
+    public String addLocation(String name, BigDecimal lat, BigDecimal lon, String country, HttpServletRequest request, Model model) {
+        return "";
     }
+
 
 }

@@ -3,11 +3,10 @@ package org.weather.service.impl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.weather.config.TestConfig;
-import org.weather.entity.Location;
+import org.weather.dto.LocationDto;
 import org.weather.entity.WeatherInfo;
 import org.weather.service.ExternalWeatherService;
 import org.weather.service.LocationService;
@@ -36,7 +35,7 @@ public class WeatherFacadeServiceImplTest {
     @Test
     void getWeatherForUserLocation_returnData() {
 
-        Location location = new Location();
+        LocationDto location = new LocationDto();
         when(locationService.listLocationsByUserId(1)).thenReturn(Collections.singletonList(location));
 
         WeatherInfo fakeWeather = WeatherInfo.builder().build();

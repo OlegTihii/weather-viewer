@@ -15,7 +15,7 @@ public interface LocationRepository {
 
     Optional<Location> findByCoordinates(int lat, int lon);
 
-    Optional<Location> save(int id);
+    Optional<Location> save(Location location);
 
     boolean deleteById(int id);
 }

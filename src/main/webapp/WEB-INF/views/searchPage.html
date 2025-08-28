@@ -50,10 +50,16 @@
                             <p class="card-text mb-1">Latitude: <span th:text="${location.lat}">0</span></p>
                             <p class="card-text mb-1">Longitude: <span th:text="${location.lon}">0</span></p>
                             <p class="card-text mb-3">Country: <span th:text="${location.country}">Country</span></p>
-                            <!-- Кнопка Добавить -->
-                            <div class="mt-auto">
-                                <button class="btn btn-primary w-100">Добавить</button>
-                            </div>
+                            <!-- Форма для добавления локации -->
+                            <form th:action="@{/locations/add}" method="post" class="mt-auto">
+                                <!-- Скрытые поля с атрибутами локации -->
+                                <input type="hidden" name="name"    th:value="${location.name}" />
+                                <input type="hidden" name="lat"     th:value="${location.lat}" />
+                                <input type="hidden" name="lon"     th:value="${location.lon}" />
+                                <input type="hidden" name="country" th:value="${location.country}" />
+
+                                <button type="submit" class="btn btn-primary w-100">Добавить</button>
+                            </form>
                         </div>
                     </div>
                 </div>

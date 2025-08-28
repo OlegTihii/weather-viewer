@@ -1,10 +1,7 @@
 package org.weather.controller.impl;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +14,7 @@ import org.weather.dto.WeatherDto;
 import org.weather.entity.Session;
 import org.weather.entity.User;
 import org.weather.service.WeatherFacadeService;
+import org.weather.util.ExtractCookieUtil;
 
 import java.util.List;
 
@@ -42,7 +40,6 @@ public class MainWeatherControllerImpl implements MainWeatherController {
         return "homePage";
     }
 
-
     @Override
     @GetMapping("/search")
     public String findLocation(HttpServletRequest request,
@@ -51,12 +48,8 @@ public class MainWeatherControllerImpl implements MainWeatherController {
 
         log.info("findLocation start");
 
-        String userCookies = null;
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("CurrentSession")) {
-                userCookies = cookie.getValue();
-            }
-        }
+        String userCookies = ExtractCookieUtil.extractCookie(request)
+                .orElseThrow(() -> new IllegalStateException("Куки не найдена"));
 
         if (city != null && !city.isBlank()) {
             List<LocationDto> cities = weatherFacadeService.getLocationsByCity(userCookies, city);
