@@ -12,6 +12,9 @@ public class WebAppInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) {
 
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+
+      //  servletContext.setInitParameter("spring.profiles.active", "dev");
+
         context.register(DataSourceConfig.class, HibernateConfig.class, WebConfig.class);
 
         DispatcherServlet dispatcherServlet = new DispatcherServlet(context);
