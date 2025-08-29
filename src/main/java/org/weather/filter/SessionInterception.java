@@ -35,6 +35,7 @@ public class SessionInterception implements HandlerInterceptor {
     }
 
     //todo возвращать null не самая лучшая идея?
+    //todo коряво написаны проверки
     private Cookie extractSessionCookie(HttpServletRequest request) {
         if (request == null) {
             return null;
@@ -43,6 +44,8 @@ public class SessionInterception implements HandlerInterceptor {
             for (Cookie cookie : request.getCookies()) {
                 if (cookie.getName().equals("CurrentSession")) {
                     return cookie;
+                } else {
+                    return null;
                 }
             }
         }

@@ -13,19 +13,19 @@ import javax.sql.DataSource;
 @Slf4j
 public class DataSourceConfig {
 
-//    @Bean
-//    //@Profile("dev")
-//    public DataSource dataSource() {
-//        DriverManagerDataSource ds = new DriverManagerDataSource();
-//        ds.setDriverClassName("org.postgresql.Driver");
-//        ds.setUrl("jdbc:postgresql://localhost:5432/weather_db?characterEncoding=UTF-8&useUnicode=true");
-//        ds.setUsername("postgres");
-//        ds.setPassword("12345");
-//        return ds;
-//    }
+    @Bean
+    @Profile("dev")
+    public DataSource dataSource() {
+        DriverManagerDataSource ds = new DriverManagerDataSource();
+        ds.setDriverClassName("org.postgresql.Driver");
+        ds.setUrl("jdbc:postgresql://localhost:5432/weather_db?characterEncoding=UTF-8&useUnicode=true");
+        ds.setUsername("postgres");
+        ds.setPassword("12345");
+        return ds;
+    }
 
     @Bean
-    // @Profile("dev")
+    @Profile("test")
     public DataSource h2DataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("org.h2.Driver");
@@ -37,7 +37,6 @@ public class DataSourceConfig {
 
     @Bean
     public SpringLiquibase liquibase(DataSource dataSource) {
-        log.info("WHERE IS LIQUI");
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(dataSource);
         liquibase.setChangeLog("classpath:/db/changelog/changelog-master.xml");
