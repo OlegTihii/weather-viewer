@@ -57,7 +57,7 @@ public class UserLoginControllerImpl implements UserLoginController {
         //todo возвращать юзерДТО с его сессией
         SessionDto sessionToken = userService.authorisation(userLoginOrRegistrationDto);
         log.info("login {}", sessionToken);
-        cookieConfig.addCookie(response, sessionToken.getId().toString());
+        cookieConfig.createCookie(response, sessionToken.getId().toString());
 
         log.info("finish");
 

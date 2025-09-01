@@ -60,7 +60,7 @@ public class UserRegistrationControllerImpl implements UserRegistrationControlle
         //todo сделано супер коряво! Я хотел возвращать UserDto и из него доставать сессию, но почему то хибер не хочет записывать сессию в юзера
         SessionDto sessionToken = userService.registration(userLoginOrRegistrationDto);
 
-        cookieConfig.addCookie(response, sessionToken.getId().toString());
+        cookieConfig.createCookie(response, sessionToken.getId().toString());
 
         return "homePage";
     }
