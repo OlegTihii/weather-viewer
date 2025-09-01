@@ -5,21 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import org.weather.config.DataSourceConfig;
 import org.weather.config.DataSourceTestConfig;
 import org.weather.config.HibernateConfig;
 import org.weather.entity.Location;
 import org.weather.entity.User;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
@@ -46,7 +42,7 @@ class LocationRepositoryImplTest {
     ApplicationContext context;
 
     @Test
-    void contexLoad(){
+    void contexLoad() {
         System.out.println("Старт");
         for (String s : context.getBeanNamesForType(Object.class)) {
             System.out.println(s);

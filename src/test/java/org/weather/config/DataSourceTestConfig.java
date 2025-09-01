@@ -1,13 +1,15 @@
 package org.weather.config;
 
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.weather.repository.LocationRepositoryImpl;
 
 import javax.sql.DataSource;
 
 @Configuration
-@Import({LiquibaseConfig.class})
+@Import(LiquibaseConfig.class)
 public class DataSourceTestConfig {
 
     @Bean
