@@ -30,7 +30,7 @@ public class Location {
     @Column(name = "longitude")
     private BigDecimal longitude;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "\"userId\"", nullable = false)
     private User user;
 

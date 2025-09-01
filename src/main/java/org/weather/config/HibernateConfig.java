@@ -28,7 +28,7 @@ public class HibernateConfig {
         factoryBean.setPackagesToScan("org.weather.entity");
 
         Properties props = new Properties();
-     //   props.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        //   props.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         props.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         props.put("hibernate.hbm2ddl.auto", "validate");
         props.put("hibernate.show_sql", "false");
