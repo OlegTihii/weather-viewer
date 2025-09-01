@@ -13,7 +13,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
 
-        servletContext.setInitParameter("spring.profiles.active", "test");
+      //  servletContext.setInitParameter("spring.profiles.active", "test");
 
         context.register(DataSourceConfig.class, HibernateConfig.class, WebConfig.class);
 
