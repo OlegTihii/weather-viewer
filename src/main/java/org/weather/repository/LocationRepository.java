@@ -18,4 +18,6 @@ public interface LocationRepository {
     Optional<Location> save(Location location);
 
     boolean deleteById(int id);
+
+    void deleteAll();
 }

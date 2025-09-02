@@ -12,4 +12,5 @@ public interface UserRepository {
 
     Optional<User> saveUser(User user);
 
+    void deleteAll();
 }

@@ -2,6 +2,7 @@ package org.weather.repository;
 
 
 import org.hibernate.exception.ConstraintViolationException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,12 @@ class LocationRepositoryImplTest {
             .latitude(BigDecimal.valueOf(33.333333))
             .longitude(BigDecimal.valueOf(22.222222))
             .build();
+
+    @BeforeEach
+   void setUp(){
+        userRepository.deleteAll();
+        locationRepository.deleteAll();
+    }
 
     @Test
     void saveAndFindById_shouldWorkCorrectly() {

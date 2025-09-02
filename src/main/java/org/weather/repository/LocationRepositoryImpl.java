@@ -59,4 +59,9 @@ public class LocationRepositoryImpl implements LocationRepository {
     public boolean deleteById(int id) {
         return false;
     }
+
+    public void deleteAll() {
+        Session currentSession = getCurrentSession();
+        currentSession.createQuery("DELETE FROM Location").executeUpdate();
+    }
 }

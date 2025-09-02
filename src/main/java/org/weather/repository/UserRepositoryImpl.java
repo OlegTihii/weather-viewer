@@ -52,5 +52,9 @@ public class UserRepositoryImpl implements UserRepository {
         return Optional.of(user);
     }
 
+    public void deleteAll() {
+        Session currentSession = getCurrentSession();
+        currentSession.createQuery("DELETE FROM User").executeUpdate();
+    }
 
 }
