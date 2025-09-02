@@ -2,14 +2,14 @@ package org.weather.repository;
 
 
 import org.hibernate.exception.ConstraintViolationException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.weather.config.DataSourceTestConfig;
 import org.weather.config.HibernateConfig;
@@ -33,35 +33,41 @@ class LocationRepositoryImplTest {
     @Autowired
     LocationRepository locationRepository;
 
-    User userTest = User.builder()
-            .login("testUser")
+
+    User userTest1 = User.builder()
+            .login("testUser1")
+            .password("testPassword")
+            .build();
+
+    User userTest2 = User.builder()
+            .login("testUser2")
             .password("testPassword")
             .build();
 
     Location locationTest1 = Location.builder()
             .city("TestCity1")
-            .user(userTest)
+            .user(userTest1)
             .latitude(BigDecimal.valueOf(33.333333))
             .longitude(BigDecimal.valueOf(22.222222))
             .build();
 
     Location locationTest2 = Location.builder()
             .city("TestCity2")
-            .user(userTest)
+            .user(userTest2)
             .latitude(BigDecimal.valueOf(11.333333))
             .longitude(BigDecimal.valueOf(55.222222))
             .build();
 
     Location uniqueLocation = Location.builder()
             .city("TestCity1")
-            .user(userTest)
+            .user(userTest1)
             .latitude(BigDecimal.valueOf(33.333333))
             .longitude(BigDecimal.valueOf(22.222222))
             .build();
 
     @Test
     void saveAndFindById_shouldWorkCorrectly() {
-        userRepository.saveUser(userTest);
+        userRepository.saveUser(userTest1);
         locationRepository.save(locationTest1);
 
         Optional<Location> found = locationRepository.findById(locationTest1.getId());
@@ -74,7 +80,7 @@ class LocationRepositoryImplTest {
 
     @Test
     void saveMoreThanOneLocation() {
-        userRepository.saveUser(userTest);
+        userRepository.saveUser(userTest1);
         locationRepository.save(locationTest1);
         locationRepository.save(locationTest2);
 
@@ -89,7 +95,7 @@ class LocationRepositoryImplTest {
 
     @Test
     void saveUniqueLocation() {
-        userRepository.saveUser(userTest);
+        userRepository.saveUser(userTest1);
         locationRepository.save(locationTest1);
 
         assertThrows(ConstraintViolationException.class, () -> locationRepository.save(uniqueLocation));
@@ -97,37 +103,35 @@ class LocationRepositoryImplTest {
 
     @Test
     void findLocationByIdTest() {
-        userRepository.saveUser(userTest);
+        userRepository.saveUser(userTest1);
         locationRepository.save(locationTest1);
 
         Optional<Location> result = locationRepository.findById(1);
 
         assertTrue(result.isPresent());
         assertEquals("TestCity1", result.get().getCity());
-
     }
 
     @Test
     void findLocationByUserId() {
-        userRepository.saveUser(userTest);
-        locationRepository.save(locationTest1);
+        userRepository.saveUser(userTest2);
+        locationRepository.save(locationTest2);
 
+        List<Location> result = locationRepository.findAllByUserId(2);
 
-        List<Location> result = locationRepository.findAllByUserId(1);
-
-        assertTrue(!result.isEmpty());
-        assertEquals("TestCity1", result.get(0).getCity());
-
-
+        assertFalse(result.isEmpty());
+        assertEquals("TestCity2", result.get(0).getCity());
     }
 
     @Test
     void findLocationByUserId_shouldReturnEmpty() {
-        userRepository.saveUser(userTest);
+        userRepository.saveUser(userTest1);
         locationRepository.save(locationTest1);
 
         Optional<Location> result = locationRepository.findById(333);
 
         assertTrue(result.isEmpty());
     }
+
+
 }
