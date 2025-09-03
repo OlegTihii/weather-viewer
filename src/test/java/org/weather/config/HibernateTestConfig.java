@@ -1,8 +1,7 @@
 package org.weather.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.*;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -12,16 +11,20 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-public class HibernateConfig {
+@Profile("test")
+@Import(DataSourceTestConfig.class)
+public class HibernateTestConfig {
 
     private final DataSource dataSource;
 
-    public HibernateConfig(DataSource dataSource) {
+    @Autowired
+    public HibernateTestConfig(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
     @Bean
     @DependsOn("liquibase")
+    @Profile("test")
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
@@ -31,8 +34,8 @@ public class HibernateConfig {
         //   props.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         props.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         props.put("hibernate.hbm2ddl.auto", "validate");
-        props.put("hibernate.show_sql", "false");
-        props.put("hibernate.format_sql", "false");
+        props.put("hibernate.show_sql", "true");
+        props.put("hibernate.format_sql", "true");
 
         factoryBean.setHibernateProperties(props);
         return factoryBean;

@@ -61,7 +61,8 @@ public class LocationRepositoryImpl implements LocationRepository {
     }
 
     public void deleteAll() {
-        Session currentSession = getCurrentSession();
-        currentSession.createQuery("DELETE FROM Location").executeUpdate();
+        Session session = getCurrentSession();
+        session.createQuery("DELETE FROM Location").executeUpdate();
+        session.createNativeQuery("ALTER TABLE locations ALTER COLUMN id RESTART WITH 1").executeUpdate();
     }
 }

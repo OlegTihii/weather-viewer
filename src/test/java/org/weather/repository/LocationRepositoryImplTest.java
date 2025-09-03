@@ -1,19 +1,20 @@
 package org.weather.repository;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.weather.config.DataSourceTestConfig;
 import org.weather.config.HibernateConfig;
+import org.weather.config.HibernateTestConfig;
 import org.weather.entity.Location;
 import org.weather.entity.User;
 
@@ -25,8 +26,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {HibernateConfig.class, DataSourceTestConfig.class, LocationRepositoryImpl.class, UserRepositoryImpl.class})
+@ContextConfiguration(classes = {DataSourceTestConfig.class, HibernateTestConfig.class, LocationRepositoryImpl.class, UserRepositoryImpl.class})
 @Transactional
+@Slf4j
 class LocationRepositoryImplTest {
 
     @Autowired
@@ -67,9 +69,11 @@ class LocationRepositoryImplTest {
             .build();
 
     @BeforeEach
-   void setUp(){
-        userRepository.deleteAll();
+    void setUp() {
+        log.info("deleteALL start");
         locationRepository.deleteAll();
+        userRepository.deleteAll();
+        log.info("deleteALL finish");
     }
 
     @Test
@@ -104,6 +108,7 @@ class LocationRepositoryImplTest {
     void saveUniqueLocation() {
         userRepository.saveUser(userTest1);
         locationRepository.save(locationTest1);
+        log.info("Тест на уникальные значения");
 
         assertThrows(ConstraintViolationException.class, () -> locationRepository.save(uniqueLocation));
     }
@@ -121,14 +126,16 @@ class LocationRepositoryImplTest {
 
     @Test
     void findLocationByUserId() {
-        userRepository.saveUser(userTest2);
-        locationRepository.save(locationTest2);
+        userRepository.saveUser(userTest1);
+        locationRepository.save(locationTest1);
 
-        List<Location> result = locationRepository.findAllByUserId(2);
+        //Если тесты изолированные то id 2 НЕ МОЖЕТ БЫТЬ!!!! Но тест проходит
+        List<Location> result = locationRepository.findAllByUserId(1);
 
         assertFalse(result.isEmpty());
-        assertEquals("TestCity2", result.get(0).getCity());
+        assertEquals("TestCity1", result.get(0).getCity());
     }
+
 
     @Test
     void findLocationByUserId_shouldReturnEmpty() {

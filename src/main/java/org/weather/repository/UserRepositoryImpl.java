@@ -53,8 +53,9 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     public void deleteAll() {
-        Session currentSession = getCurrentSession();
-        currentSession.createQuery("DELETE FROM User").executeUpdate();
+        Session session = getCurrentSession();
+        session.createQuery("DELETE FROM User").executeUpdate();
+        session.createNativeQuery("ALTER TABLE users ALTER COLUMN id RESTART WITH 1").executeUpdate();
     }
 
 }
