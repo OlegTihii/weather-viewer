@@ -39,13 +39,16 @@ public class SessionRepositoryImpl implements SessionRepository {
     public void remove(UUID uuid) {
         log.info("Start remove");
         Session session = getCurrentSession().get(Session.class, uuid);
+        if(session != null){
+            getCurrentSession().remove(session);
+        }
         log.info("Session {}", session);
-        getCurrentSession().remove(session);
+
         log.info("Finish remove");
     }
 
     @Override
-    public boolean checkSessionByUser(Session session) {
+    public boolean hasSessionUser(Session session) {
         log.info("Start checkSessionByUser");
         User user = getCurrentSession().get(User.class, session.getUser().getId());
         log.info("Finish checkSessionByUser {}", user);
@@ -55,5 +58,12 @@ public class SessionRepositoryImpl implements SessionRepository {
     //todo херь получилась
     private org.hibernate.Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
+    }
+
+    @Override
+    public void deleteAll() {
+        org.hibernate.Session session = getCurrentSession();
+        session.createMutationQuery("DELETE FROM Session").executeUpdate();
+        session.createNativeMutationQuery("ALTER TABLE sessions ALTER COLUMN id RESTART WITH 1").executeUpdate();
     }
 }

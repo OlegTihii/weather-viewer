@@ -52,8 +52,8 @@ public class SessionServiceImpl implements SessionService {
             return false;
         }
 
-        log.info("validateSession {}", sessionRepository.checkSessionByUser(bySessionId.get()));
-        return sessionRepository.checkSessionByUser(bySessionId.get());
+        log.info("validateSession {}", sessionRepository.hasSessionUser(bySessionId.get()));
+        return sessionRepository.hasSessionUser(bySessionId.get());
     }
 
     public void removeSession(UUID uuid) {

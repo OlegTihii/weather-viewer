@@ -12,5 +12,7 @@ public interface SessionRepository {
 
     void remove(UUID uuid);
 
-    boolean checkSessionByUser(Session session);
+    boolean hasSessionUser(Session session);
+
+    void deleteAll();
 }

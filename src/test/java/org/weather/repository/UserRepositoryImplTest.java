@@ -28,16 +28,15 @@ class UserRepositoryImplTest {
     @Autowired
     UserRepository userRepository;
 
-    @BeforeEach
-    void setUp() {
-        userRepository.deleteAll();
-    }
-
-
     User userTest = User.builder()
             .login("test")
             .password("test_password")
             .build();
+
+    @BeforeEach
+    void setUp() {
+        userRepository.deleteAll();
+    }
 
     @Test
     void saveUserTest() {
@@ -60,7 +59,7 @@ class UserRepositoryImplTest {
 
 
     @Test
-    void findByLoginAndPassword() {
+    void findByLoginAndPasswordTest() {
         userRepository.saveUser(userTest);
 
         Optional<User> result = userRepository.findByLoginAndPassword(userTest);
