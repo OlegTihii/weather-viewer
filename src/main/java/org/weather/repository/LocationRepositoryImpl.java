@@ -1,5 +1,6 @@
 package org.weather.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Slf4j
 public class LocationRepositoryImpl implements LocationRepository {
 
     private final SessionFactory sessionFactory;
@@ -52,7 +54,7 @@ public class LocationRepositoryImpl implements LocationRepository {
     @Override
     public Optional<Location> save(Location location) {
         getCurrentSession().persist(location);
-        return Optional.empty();
+        return Optional.of(location);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class LocationRepositoryImpl implements LocationRepository {
 
     public void deleteAll() {
         Session session = getCurrentSession();
-        session.createQuery("DELETE FROM Location").executeUpdate();
-        session.createNativeQuery("ALTER TABLE locations ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        session.createMutationQuery("DELETE FROM Location").executeUpdate();
+        session.createNativeMutationQuery("ALTER TABLE locations ALTER COLUMN id RESTART WITH 1").executeUpdate();
     }
 }

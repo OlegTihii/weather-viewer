@@ -1,10 +1,9 @@
 package org.weather.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.weather.entity.User;
@@ -12,8 +11,8 @@ import org.weather.entity.User;
 import java.util.Optional;
 
 @Repository
+@Slf4j
 public class UserRepositoryImpl implements UserRepository {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserRepositoryImpl.class);
 
     private final SessionFactory sessionFactory;
 
@@ -39,7 +38,7 @@ public class UserRepositoryImpl implements UserRepository {
         findByName.setParameter("name", user.getLogin());
         findByName.setParameter("password", user.getPassword());
 
-        LOGGER.info("Finding by name: {}", findByName.uniqueResultOptional());
+        log.info("Finding by name: {}", findByName.uniqueResultOptional());
         return findByName.uniqueResultOptional();
     }
 
@@ -54,8 +53,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     public void deleteAll() {
         Session session = getCurrentSession();
-        session.createQuery("DELETE FROM User").executeUpdate();
-        session.createNativeQuery("ALTER TABLE users ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        session.createMutationQuery("DELETE FROM User").executeUpdate();
+        session.createNativeMutationQuery("ALTER TABLE users ALTER COLUMN id RESTART WITH 1").executeUpdate();
     }
-
 }

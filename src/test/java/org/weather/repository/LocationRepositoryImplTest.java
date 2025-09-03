@@ -56,7 +56,7 @@ class LocationRepositoryImplTest {
 
     Location locationTest2 = Location.builder()
             .city("TestCity2")
-            .user(userTest2)
+            .user(userTest1)
             .latitude(BigDecimal.valueOf(11.333333))
             .longitude(BigDecimal.valueOf(55.222222))
             .build();
@@ -77,7 +77,7 @@ class LocationRepositoryImplTest {
     }
 
     @Test
-    void saveAndFindById_shouldWorkCorrectly() {
+    void saveAndFindById_shouldWorkCorrectlyTest() {
         userRepository.saveUser(userTest1);
         locationRepository.save(locationTest1);
 
@@ -90,7 +90,7 @@ class LocationRepositoryImplTest {
     }
 
     @Test
-    void saveMoreThanOneLocation() {
+    void saveMoreThanOneLocationTest() {
         userRepository.saveUser(userTest1);
         locationRepository.save(locationTest1);
         locationRepository.save(locationTest2);
@@ -105,7 +105,7 @@ class LocationRepositoryImplTest {
     }
 
     @Test
-    void saveUniqueLocation() {
+    void saveUniqueLocationTest() {
         userRepository.saveUser(userTest1);
         locationRepository.save(locationTest1);
         log.info("Тест на уникальные значения");
@@ -125,20 +125,7 @@ class LocationRepositoryImplTest {
     }
 
     @Test
-    void findLocationByUserId() {
-        userRepository.saveUser(userTest1);
-        locationRepository.save(locationTest1);
-
-        //Если тесты изолированные то id 2 НЕ МОЖЕТ БЫТЬ!!!! Но тест проходит
-        List<Location> result = locationRepository.findAllByUserId(1);
-
-        assertFalse(result.isEmpty());
-        assertEquals("TestCity1", result.get(0).getCity());
-    }
-
-
-    @Test
-    void findLocationByUserId_shouldReturnEmpty() {
+    void findLocationByUserId_shouldReturnEmptyTest() {
         userRepository.saveUser(userTest1);
         locationRepository.save(locationTest1);
 
@@ -146,6 +133,33 @@ class LocationRepositoryImplTest {
 
         assertTrue(result.isEmpty());
     }
+
+    @Test
+    void findLocationByUserIdTest() {
+        userRepository.saveUser(userTest1);
+        locationRepository.save(locationTest1);
+        locationRepository.save(locationTest2);
+
+        List<Location> result = locationRepository.findAllByUserId(1);
+
+        List<String> list = result.stream()
+                .map(Location::getCity)
+                .toList();
+
+        assertEquals(List.of("TestCity1", "TestCity2"), list);
+    }
+
+    @Test
+    void findLocationByUserIdTest_shouldReturnEmptyTest() {
+        userRepository.saveUser(userTest1);
+
+        List<Location> result = locationRepository.findAllByUserId(1);
+
+        assertTrue(result.isEmpty());
+    }
+
+
+
 
 
 }
