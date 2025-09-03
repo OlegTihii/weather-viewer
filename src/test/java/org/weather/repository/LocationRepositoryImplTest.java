@@ -40,11 +40,6 @@ class LocationRepositoryImplTest {
             .password("testPassword")
             .build();
 
-    User userTest2 = User.builder()
-            .login("testUser2")
-            .password("testPassword")
-            .build();
-
     Location locationTest1 = Location.builder()
             .city("TestCity1")
             .user(userTest1)

@@ -11,12 +11,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import org.weather.config.DataSourceTestConfig;
 import org.weather.config.HibernateTestConfig;
-import org.weather.entity.Location;
 import org.weather.entity.User;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ContextConfiguration(classes = {HibernateTestConfig.class, DataSourceTestConfig.class, UserRepositoryImpl.class})
 @ExtendWith(SpringExtension.class)
