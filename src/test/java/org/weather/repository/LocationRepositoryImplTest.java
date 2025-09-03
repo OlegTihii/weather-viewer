@@ -7,13 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import org.weather.config.DataSourceTestConfig;
-import org.weather.config.HibernateConfig;
 import org.weather.config.HibernateTestConfig;
 import org.weather.entity.Location;
 import org.weather.entity.User;
@@ -70,10 +68,8 @@ class LocationRepositoryImplTest {
 
     @BeforeEach
     void setUp() {
-        log.info("deleteALL start");
         locationRepository.deleteAll();
         userRepository.deleteAll();
-        log.info("deleteALL finish");
     }
 
     @Test
@@ -157,9 +153,6 @@ class LocationRepositoryImplTest {
 
         assertTrue(result.isEmpty());
     }
-
-
-
 
 
 }
