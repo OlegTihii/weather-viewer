@@ -1,6 +1,5 @@
 package org.weather.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -19,4 +18,5 @@ public class LocationDto {
     BigDecimal lon;
     String country;
     String state;
+    WeatherDto weatherDto;
 }

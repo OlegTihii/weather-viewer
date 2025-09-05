@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.weather.controller.MainWeatherController;
 import org.weather.dto.LocationDto;
-import org.weather.dto.WeatherDto;
-import org.weather.entity.Session;
-import org.weather.entity.User;
+import org.weather.dto.UserLocationsWeatherDto;
 import org.weather.service.WeatherFacadeService;
 import org.weather.util.ExtractCookieUtil;
 
@@ -32,10 +30,14 @@ public class MainWeatherControllerImpl implements MainWeatherController {
     @Override
     @GetMapping("/")
     //todo почему заходит 4 раза сюда?
-    public String getPersonWeatherCards(User user, Session session, Model model) {
-        List<WeatherDto> locationDto = weatherFacadeService.getWeatherForUserLocation(1);
-        // как получили сущность из бд, то нужно сделать еще запрос на получение данных с сайта погоды
-        model.addAttribute("location", locationDto);
+    public String getPersonWeatherCards(HttpServletRequest request, Model model) {
+        String cookie = ExtractCookieUtil.extractCookie(request)
+                .orElseThrow(() -> new IllegalStateException("Куки не найдена"));
+
+        UserLocationsWeatherDto userLocationsWeatherDto = weatherFacadeService.getUserLocationsWeather(cookie);
+
+        model.addAttribute("user", userLocationsWeatherDto);
+        model.addAttribute("userWeather", userLocationsWeatherDto);
 
         return "homePage";
     }

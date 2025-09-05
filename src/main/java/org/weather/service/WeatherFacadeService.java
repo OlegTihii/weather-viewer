@@ -1,15 +1,14 @@
 package org.weather.service;
 
-import jakarta.servlet.http.Cookie;
 import org.weather.dto.LocationDto;
-import org.weather.dto.WeatherDto;
+import org.weather.dto.UserLocationsWeatherDto;
 
 import java.util.List;
 
 
 public interface WeatherFacadeService {
 
-    List<WeatherDto> getWeatherForUserLocation(int userId);
+    List<LocationDto> getLocationsByCity(String userCookie, String city);
 
-    public List<LocationDto> getLocationsByCity(String userCookie, String city);
+    UserLocationsWeatherDto getUserLocationsWeather(String cookie);
 }

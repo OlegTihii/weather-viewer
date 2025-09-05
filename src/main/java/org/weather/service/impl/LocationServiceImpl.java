@@ -35,14 +35,13 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     @Transactional(readOnly = true) //todo почему без него не работает??? Причем тут прокси?
-    public List<LocationDto> listLocationsByUserId(int id) {
+    public List<Location> listLocationsByUserId(int id) {
         return null;
 
     }
 
     @Override
     public LocationDto findLocationByCoordinates(int lat, int lon) {
-
         return null;
     }
 

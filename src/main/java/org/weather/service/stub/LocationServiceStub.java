@@ -2,6 +2,7 @@ package org.weather.service.stub;
 
 import org.springframework.stereotype.Service;
 import org.weather.dto.LocationDto;
+import org.weather.entity.Location;
 import org.weather.service.LocationService;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class LocationServiceStub implements LocationService {
     private List<LocationDto> locations;
 
     @Override
-    public List<LocationDto> listLocationsByUserId(int id) {
+    public List<Location> listLocationsByUserId(int id) {
 
         return null;
 

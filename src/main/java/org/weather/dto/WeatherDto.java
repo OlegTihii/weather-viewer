@@ -3,6 +3,7 @@ package org.weather.dto;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -10,25 +11,56 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class WeatherDto {
 
-    private String city;
-    private BigDecimal latitude;
-    private BigDecimal longitude;
-    private String country;
-    private Integer temperature;
-    private Integer humidity;
+    private String name;
+    private List<Weather> weather;
+    private Coord coord;
+    private Sys sys;
+    private Main main;
 
-    @Override
-    public String toString() {
-        return "LocationDto{" +
-                "city='" + city + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", country='" + country + '\'' +
-                ", temperature=" + temperature +
-                ", humidity=" + humidity +
-                '}';
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @ToString
+    public static class Coord {
+        BigDecimal lon;
+        BigDecimal lat;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @ToString
+    public static class Sys {
+        String country;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @ToString
+    public static class Main {
+        Integer temp;
+        Integer humidity;
+        Integer feels_like;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @ToString
+    public static class Weather {
+        String main;
+        String icon;
+    }
+
+
+
 
 }

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.weather.controller.MainWeatherController;
-import org.weather.entity.Session;
 import org.weather.entity.User;
 import org.weather.service.LocationService;
 import org.weather.service.UserService;
@@ -32,7 +31,7 @@ public class MainWeatherControllerStub implements MainWeatherController {
 
     @Override
     @GetMapping("/")
-    public String getPersonWeatherCards(User user, Session session, Model model) {
+    public String getPersonWeatherCards(HttpServletRequest request, Model model) {
         //у нас уже есть авторизация и нам нужно передать в сервис данные
         //авторизации и вернуть карточка погоды
 

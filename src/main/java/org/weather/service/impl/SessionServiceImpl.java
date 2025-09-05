@@ -56,6 +56,14 @@ public class SessionServiceImpl implements SessionService {
         return sessionRepository.hasSessionUser(bySessionId.get());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public User findUserByIdSession(UUID idForSession) {
+        User user = sessionRepository.findBySessionId(idForSession).get().getUser();
+        log.info("findUserByIdSession {}", user);
+        return user;
+    }
+
     public void removeSession(UUID uuid) {
         log.info("removeSession {}", uuid);
         sessionRepository.remove(uuid);

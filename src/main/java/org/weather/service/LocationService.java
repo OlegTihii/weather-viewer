@@ -1,12 +1,13 @@
 package org.weather.service;
 
 import org.weather.dto.LocationDto;
+import org.weather.entity.Location;
 
 import java.util.List;
 
 public interface LocationService {
 
-    List<LocationDto> listLocationsByUserId(int id);
+    List<Location> listLocationsByUserId(int id);
 
     LocationDto findLocationByCoordinates(int lat, int lon);
 
