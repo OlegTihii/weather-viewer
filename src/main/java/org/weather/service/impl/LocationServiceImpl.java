@@ -50,24 +50,19 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     @Transactional
-    //todo ПЕРЕПИСАТЬ НОРМАЛЬНО!!
-    //Юзера достаем из сессии!
     public void addLocation(LocationDto locationDto, String userCookies) {
-        Optional<Session> bySessionId = sessionRepository.findBySessionId(UUID.fromString(userCookies));
+        Optional<Session> session = sessionRepository.findBySessionId(UUID.fromString(userCookies));
 
-        if (bySessionId.isEmpty()) {
+        if (session.isEmpty()) {
             throw new UsernameNotFoundException("Сессии нет");
         }
 
-        Optional<User> user = userRepository.findById(bySessionId.get().getUser().getId());
+        User user = session.get().getUser();
         log.info("addLocation {}", user.toString());
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException("Юзера нет");
-        }
 
         Location location = LocationMapper.INSTANCE.toEntity(locationDto);
 
-        location.setUser(user.get());
+        location.setUser(user);
         locationRepository.save(location);
     }
 
@@ -83,5 +78,4 @@ public class LocationServiceImpl implements LocationService {
 
         locationRepository.deleteByUserIdAndCoordinates(user, latitude, longitude);
     }
-
 }
