@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -51,5 +52,12 @@ public class GlobalExceptionHandler {
     public String handleUserNameAlreadyExists(IllegalStateException e, Model model) {
         model.addAttribute("error", "Пользователь с таким именем существует: " + e.getMessage());
         return "sign-up-with-errors";
+    }
+
+    @ExceptionHandler(LocationAlreadyExistException.class)
+    public String handlerLocationAlreadyExist(LocationAlreadyExistException e,
+                                              RedirectAttributes flash) {
+        flash.addAttribute("errorMessage", e.getMessage());
+        return "redirect:/locations";
     }
 }
