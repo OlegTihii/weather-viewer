@@ -27,13 +27,12 @@ import java.util.UUID;
 public class LocationServiceImpl implements LocationService {
     private final LocationRepository locationRepository;
     private final SessionRepository sessionRepository;
-    private final UserRepository userRepository;
+
 
     @Autowired
-    public LocationServiceImpl(LocationRepository locationRepository, SessionRepository sessionRepository, UserRepository userRepository) {
+    public LocationServiceImpl(LocationRepository locationRepository, SessionRepository sessionRepository) {
         this.locationRepository = locationRepository;
         this.sessionRepository = sessionRepository;
-        this.userRepository = userRepository;
     }
 
     @Override
