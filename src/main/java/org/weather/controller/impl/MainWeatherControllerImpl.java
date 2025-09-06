@@ -15,11 +15,9 @@ import org.weather.dto.LocationDto;
 import org.weather.dto.UserLocationsWeatherDto;
 import org.weather.service.LocationService;
 import org.weather.service.WeatherFacadeService;
-import org.weather.service.impl.LocationServiceImpl;
 import org.weather.util.ExtractCookieUtil;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -52,10 +50,8 @@ public class MainWeatherControllerImpl implements MainWeatherController {
     @Override
     @GetMapping("/search")
     public String findLocation(HttpServletRequest request,
-                               @RequestParam(required = false) String city,
+                               @RequestParam String city,
                                Model model) {
-
-        log.info("findLocation start");
 
         String userCookies = ExtractCookieUtil.extractCookie(request)
                 .orElseThrow(() -> new IllegalStateException("Куки не найдена"));
@@ -67,7 +63,6 @@ public class MainWeatherControllerImpl implements MainWeatherController {
             model.addAttribute("error", "please enter the correct name or coordinates");
         }
 
-        log.info("findLocation finish");
         return "searchPage";
     }
 

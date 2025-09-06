@@ -19,4 +19,5 @@ public class LocationDto {
     String country;
     String state;
     WeatherDto weatherDto;
+    boolean alreadyAdded;
 }
