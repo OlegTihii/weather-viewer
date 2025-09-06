@@ -1,5 +1,6 @@
 package org.weather.service;
 
+import org.weather.dto.LocationDto;
 import org.weather.dto.WeatherDto;
 import org.weather.entity.Location;
 
@@ -9,7 +10,7 @@ public interface ExternalWeatherService {
 
     WeatherDto getWeather(Location location);
 
-    List<Location> getLocationsByCity(String city);
+    List<LocationDto> getLocationsByCity(String city);
 }
 
 

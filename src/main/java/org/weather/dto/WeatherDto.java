@@ -57,6 +57,7 @@ public class WeatherDto {
     @ToString
     public static class Weather {
         String main;
+        String description;
         String icon;
     }
 

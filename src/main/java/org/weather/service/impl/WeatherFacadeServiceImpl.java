@@ -2,7 +2,6 @@ package org.weather.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.weather.dto.LocationDto;
 import org.weather.dto.UserLocationsWeatherDto;
@@ -11,7 +10,6 @@ import org.weather.entity.Location;
 import org.weather.entity.User;
 import org.weather.mapper.LocationMapper;
 import org.weather.service.ExternalWeatherService;
-import org.weather.service.LocationService;
 import org.weather.service.SessionService;
 import org.weather.service.WeatherFacadeService;
 
@@ -22,13 +20,11 @@ import java.util.UUID;
 @Slf4j
 public class WeatherFacadeServiceImpl implements WeatherFacadeService {
 
-    private final LocationService locationService;
     private final ExternalWeatherService externalWeatherService;
     private final SessionService sessionService;
 
     @Autowired
-    public WeatherFacadeServiceImpl(@Qualifier("locationServiceImpl") LocationService locationService, ExternalWeatherService externalWeatherService, SessionService sessionService) {
-        this.locationService = locationService;
+    public WeatherFacadeServiceImpl(ExternalWeatherService externalWeatherService, SessionService sessionService) {
         this.externalWeatherService = externalWeatherService;
         this.sessionService = sessionService;
     }
@@ -36,9 +32,7 @@ public class WeatherFacadeServiceImpl implements WeatherFacadeService {
     //todo Что-то часто запрос в БД с поиском Юзера то по id то по куки. Может его можно куда-то записать?
     @Override
     public List<LocationDto> getLocationsByCity(String userCookie, String city) {
-        List<Location> locationsByCity = externalWeatherService.getLocationsByCity(city);
-        return LocationMapper.INSTANCE.toListDto(locationsByCity);
-
+        return externalWeatherService.getLocationsByCity(city);
     }
 
     @Override
