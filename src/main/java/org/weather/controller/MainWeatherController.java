@@ -2,6 +2,7 @@ package org.weather.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public interface MainWeatherController {
 
@@ -9,5 +10,7 @@ public interface MainWeatherController {
 
     String getPersonWeatherCards(HttpServletRequest request, Model model);
 
-    String deleteLocation(int id);
+    String deleteLocationFromUser(@RequestParam String lat,
+                                  @RequestParam String lon,
+                                  HttpServletRequest request);
 }

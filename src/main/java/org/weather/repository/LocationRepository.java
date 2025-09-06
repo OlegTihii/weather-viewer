@@ -1,7 +1,9 @@
 package org.weather.repository;
 
 import org.weather.entity.Location;
+import org.weather.entity.User;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +19,7 @@ public interface LocationRepository {
 
     Optional<Location> save(Location location);
 
-    boolean deleteById(int id);
+    boolean deleteByUserIdAndCoordinates(User user, BigDecimal latitude, BigDecimal longitude);
 
     void deleteAll();
 }

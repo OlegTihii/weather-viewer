@@ -2,6 +2,7 @@ package org.weather.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +16,13 @@ import org.weather.repository.SessionRepository;
 import org.weather.repository.UserRepository;
 import org.weather.service.LocationService;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service("locationServiceImpl")
+@Qualifier("locationsServiceImpl")
 @Slf4j
 public class LocationServiceImpl implements LocationService {
     private final LocationRepository locationRepository;
@@ -47,6 +50,8 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     @Transactional
+    //todo ПЕРЕПИСАТЬ НОРМАЛЬНО!!
+    //Юзера достаем из сессии!
     public void addLocation(LocationDto locationDto, String userCookies) {
         Optional<Session> bySessionId = sessionRepository.findBySessionId(UUID.fromString(userCookies));
 
@@ -67,7 +72,16 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public boolean deleteLocation(int id) {
-        return false;
+    @Transactional
+    public void deleteLocation(String cookie, String lat, String lon) {
+        User user = sessionRepository.findBySessionId(UUID.fromString(cookie))
+                .orElseThrow(() -> new IllegalStateException("Пользователь не найден"))
+                .getUser();
+
+        BigDecimal latitude = new BigDecimal(lat);
+        BigDecimal longitude = new BigDecimal(lon);
+
+        locationRepository.deleteByUserIdAndCoordinates(user, latitude, longitude);
     }
+
 }

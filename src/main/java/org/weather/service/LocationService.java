@@ -13,6 +13,5 @@ public interface LocationService {
 
     void addLocation(LocationDto locationDto, String userCookies);
 
-    boolean deleteLocation(int id);
-
+    void deleteLocation(String cookie, String lat, String lon);
 }

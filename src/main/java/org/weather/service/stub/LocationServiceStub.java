@@ -29,9 +29,10 @@ public class LocationServiceStub implements LocationService {
 
     }
 
-
     @Override
-    public boolean deleteLocation(int id) {
-        return false;
+    public void deleteLocation(String cookie, String lat, String lon) {
+
     }
+
+
 }

@@ -149,5 +149,27 @@ class LocationRepositoryImplTest {
         assertTrue(result.isEmpty());
     }
 
+    @Test
+    void deleteByUserIdAndCoordinatesTest() {
+        userRepository.saveUser(userTest1);
+        locationRepository.save(locationTest1);
+        locationRepository.save(locationTest2);
 
+        boolean result = locationRepository.deleteByUserIdAndCoordinates(userTest1, locationTest1.getLatitude(), locationTest1.getLongitude());
+
+        assertTrue(result);
+    }
+
+    @Test
+    void deleteByUserIdAndCoordinatesTest_WrongCoordinate() {
+        userRepository.saveUser(userTest1);
+        locationRepository.save(locationTest1);
+        locationRepository.save(locationTest2);
+
+        boolean result = locationRepository.deleteByUserIdAndCoordinates(userTest1,
+                locationTest1.getLatitude(),
+                new BigDecimal("77.777777"));
+
+        assertFalse(result);
+    }
 }

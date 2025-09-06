@@ -7,7 +7,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.weather.entity.Location;
+import org.weather.entity.User;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,8 +60,26 @@ public class LocationRepositoryImpl implements LocationRepository {
     }
 
     @Override
-    public boolean deleteById(int id) {
-        return false;
+    public boolean deleteByUserIdAndCoordinates(User user, BigDecimal latitude, BigDecimal longitude) {
+        Session currentSession = getCurrentSession();
+
+        List<Location> allByUserId = findAllByUserId(user.getId());
+        log.info("deleteByUserIdAndCoordinates start {} {}", user, allByUserId.size());
+
+
+        int deleteCount = currentSession.createMutationQuery(
+                        "DELETE FROM Location l " +
+                                "WHERE l.user = :user AND l.latitude = :lat and l.longitude = :lon"
+                )
+                .setParameter("user", user)
+                .setParameter("lat", latitude)
+                .setParameter("lon", longitude)
+                .executeUpdate();
+
+        List<Location> allByUserId2 = findAllByUserId(user.getId());
+        log.info("deleteByUserIdAndCoordinates finish {} {}", user, allByUserId2.size());
+
+        return deleteCount > 0;
     }
 
     public void deleteAll() {

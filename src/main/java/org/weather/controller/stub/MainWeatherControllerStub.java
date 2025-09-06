@@ -41,6 +41,11 @@ public class MainWeatherControllerStub implements MainWeatherController {
         return "homePage";
     }
 
+    @Override
+    public String deleteLocationFromUser(String lat, String lon, HttpServletRequest request) {
+        return "";
+    }
+
 
     //todo должен делать редирект или как лучше обработать?
 
@@ -61,12 +66,6 @@ public class MainWeatherControllerStub implements MainWeatherController {
 //        }
 
         return "searchPage";
-    }
-
-
-    @Override
-    public String deleteLocation(int id) {
-        return "You deleted location: " + id;
     }
 
 

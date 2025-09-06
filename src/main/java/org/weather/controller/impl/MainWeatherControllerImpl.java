@@ -3,28 +3,35 @@ package org.weather.controller.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.weather.controller.MainWeatherController;
 import org.weather.dto.LocationDto;
 import org.weather.dto.UserLocationsWeatherDto;
+import org.weather.service.LocationService;
 import org.weather.service.WeatherFacadeService;
+import org.weather.service.impl.LocationServiceImpl;
 import org.weather.util.ExtractCookieUtil;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
 @Slf4j
 public class MainWeatherControllerImpl implements MainWeatherController {
     private final WeatherFacadeService weatherFacadeService;
+    private final LocationService locationService;
 
     @Autowired
-    public MainWeatherControllerImpl(WeatherFacadeService weatherFacadeService) {
+    public MainWeatherControllerImpl(WeatherFacadeService weatherFacadeService, @Qualifier("locationServiceImpl") LocationService locationService) {
         this.weatherFacadeService = weatherFacadeService;
+        this.locationService = locationService;
     }
 
     @Override
@@ -64,10 +71,16 @@ public class MainWeatherControllerImpl implements MainWeatherController {
         return "searchPage";
     }
 
-
     @Override
-    public String deleteLocation(int id) {
-        return "You deleted location: " + id;
-    }
+    @PostMapping("/delete")
+    public String deleteLocationFromUser(@RequestParam String lat,
+                                         @RequestParam String lon,
+                                         HttpServletRequest request) {
 
+        String cookie = ExtractCookieUtil.extractCookie(request)
+                .orElseThrow(() -> new IllegalStateException("Куки не найдена"));
+
+        locationService.deleteLocation(cookie, lat, lon);
+        return "redirect:/";
+    }
 }
