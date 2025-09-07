@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+//todo нужна помощь разобраться в @Transactional. Работает только когда ставлю над каждым методом, но говорят это не правильно!
+//todo зачем нужно постоянно ставить финал над полями? (идея намекает)
 @Service
 @Slf4j
 public class SessionServiceImpl implements SessionService {
@@ -67,6 +69,13 @@ public class SessionServiceImpl implements SessionService {
     @Transactional
     public void removeSession(String cookie) {
         sessionRepository.remove(UUID.fromString(cookie));
+    }
+
+    @Override
+    @Transactional
+    public void deleteExpiredSessions() {
+      LocalDateTime nowTime = LocalDateTime.now();
+      sessionRepository.deleteExpiredSessions();
     }
 
     private boolean isSessionActive(Session session) {

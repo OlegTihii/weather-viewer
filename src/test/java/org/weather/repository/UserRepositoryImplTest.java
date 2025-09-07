@@ -40,7 +40,7 @@ class UserRepositoryImplTest {
 
     @Test
     void saveUserTest() {
-        Optional<User> user = userRepository.saveUser(userTest);
+        Optional<User> user = userRepository.save(userTest);
 
         assertTrue(user.isPresent());
         assertEquals(1, user.get().getId());
@@ -48,7 +48,7 @@ class UserRepositoryImplTest {
 
     @Test
     void findByIdTest() {
-        userRepository.saveUser(userTest);
+        userRepository.save(userTest);
 
         Optional<User> user = userRepository.findById(1);
 
@@ -60,7 +60,7 @@ class UserRepositoryImplTest {
 
     @Test
     void findByLoginAndPasswordTest() {
-        userRepository.saveUser(userTest);
+        userRepository.save(userTest);
 
         Optional<User> result = userRepository.findByLoginAndPassword(userTest);
 

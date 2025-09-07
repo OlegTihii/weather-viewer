@@ -13,4 +13,6 @@ public interface SessionService {
     User findUserByIdSession(UUID idForSession);
 
     void removeSession(String cookie);
+
+    void deleteExpiredSessions();
 }

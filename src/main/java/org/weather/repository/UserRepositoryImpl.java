@@ -43,7 +43,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> saveUser(User user) {
+    public Optional<User> save (User user) {
 
         Session session = getCurrentSession();
         session.persist(user);

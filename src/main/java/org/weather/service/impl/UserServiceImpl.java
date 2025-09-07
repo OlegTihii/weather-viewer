@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         }
 
         //todo  смысл от хибернейта если не сохраняется в сущностях значения
-        Optional<User> user = userRepository.saveUser(userEntity);
+        Optional<User> user = userRepository.save(userEntity);
         LOGGER.info("UserServiceImpl | registration | {}", user);
 
         return sessionService.createSession(userEntity);

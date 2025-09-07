@@ -10,7 +10,7 @@ public interface UserRepository {
 
     Optional<User> findByLoginAndPassword(User user);
 
-    Optional<User> saveUser(User user);
+    Optional<User> save(User user);
 
     void deleteAll();
 }

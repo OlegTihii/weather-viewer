@@ -69,7 +69,7 @@ class LocationRepositoryImplTest {
 
     @Test
     void saveAndFindById_shouldWorkCorrectlyTest() {
-        userRepository.saveUser(userTest1);
+        userRepository.save(userTest1);
         locationRepository.save(locationTest1);
 
         Optional<Location> found = locationRepository.findById(locationTest1.getId());
@@ -82,7 +82,7 @@ class LocationRepositoryImplTest {
 
     @Test
     void saveMoreThanOneLocationTest() {
-        userRepository.saveUser(userTest1);
+        userRepository.save(userTest1);
         locationRepository.save(locationTest1);
         locationRepository.save(locationTest2);
 
@@ -97,7 +97,7 @@ class LocationRepositoryImplTest {
 
     @Test
     void saveUniqueLocationTest() {
-        userRepository.saveUser(userTest1);
+        userRepository.save(userTest1);
         locationRepository.save(locationTest1);
         log.info("Тест на уникальные значения");
 
@@ -106,7 +106,7 @@ class LocationRepositoryImplTest {
 
     @Test
     void findLocationByIdTest() {
-        userRepository.saveUser(userTest1);
+        userRepository.save(userTest1);
         locationRepository.save(locationTest1);
 
         Optional<Location> result = locationRepository.findById(1);
@@ -117,7 +117,7 @@ class LocationRepositoryImplTest {
 
     @Test
     void findLocationByUserId_shouldReturnEmptyTest() {
-        userRepository.saveUser(userTest1);
+        userRepository.save(userTest1);
         locationRepository.save(locationTest1);
 
         Optional<Location> result = locationRepository.findById(333);
@@ -127,7 +127,7 @@ class LocationRepositoryImplTest {
 
     @Test
     void findLocationByUserIdTest() {
-        userRepository.saveUser(userTest1);
+        userRepository.save(userTest1);
         locationRepository.save(locationTest1);
         locationRepository.save(locationTest2);
 
@@ -142,7 +142,7 @@ class LocationRepositoryImplTest {
 
     @Test
     void findLocationByUserIdTest_shouldReturnEmptyTest() {
-        userRepository.saveUser(userTest1);
+        userRepository.save(userTest1);
 
         List<Location> result = locationRepository.findAllByUserId(1);
 
@@ -151,7 +151,7 @@ class LocationRepositoryImplTest {
 
     @Test
     void deleteByUserIdAndCoordinatesTest() {
-        userRepository.saveUser(userTest1);
+        userRepository.save(userTest1);
         locationRepository.save(locationTest1);
         locationRepository.save(locationTest2);
 
@@ -162,7 +162,7 @@ class LocationRepositoryImplTest {
 
     @Test
     void deleteByUserIdAndCoordinatesTest_WrongCoordinate() {
-        userRepository.saveUser(userTest1);
+        userRepository.save(userTest1);
         locationRepository.save(locationTest1);
         locationRepository.save(locationTest2);
 

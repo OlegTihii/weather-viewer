@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.weather.entity.Session;
 import org.weather.entity.User;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,7 +40,7 @@ public class SessionRepositoryImpl implements SessionRepository {
     public void remove(UUID uuid) {
         log.info("Start remove");
         Session session = getCurrentSession().get(Session.class, uuid);
-        if(session != null){
+        if (session != null) {
             getCurrentSession().remove(session);
         }
         log.info("Session {}", session);
@@ -49,9 +50,7 @@ public class SessionRepositoryImpl implements SessionRepository {
 
     @Override
     public boolean hasSessionUser(Session session) {
-        log.info("Start checkSessionByUser");
         User user = getCurrentSession().get(User.class, session.getUser().getId());
-        log.info("Finish checkSessionByUser {}", user);
         return user != null;
     }
 
@@ -65,5 +64,15 @@ public class SessionRepositoryImpl implements SessionRepository {
         org.hibernate.Session session = getCurrentSession();
         session.createMutationQuery("DELETE FROM Session").executeUpdate();
         session.createNativeMutationQuery("ALTER TABLE sessions ALTER COLUMN id RESTART WITH 1").executeUpdate();
+    }
+
+    @Override
+    public boolean deleteExpiredSessions() {
+        org.hibernate.Session currentSession = getCurrentSession();
+        int result = currentSession.createMutationQuery("DELETE FROM Session s WHERE s.expiresAt < :nowTime")
+                .setParameter("nowTime", LocalDateTime.now())
+                .executeUpdate();
+
+        return result > 0;
     }
 }

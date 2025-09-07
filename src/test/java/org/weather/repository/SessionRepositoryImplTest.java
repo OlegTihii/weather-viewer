@@ -32,26 +32,29 @@ class SessionRepositoryImplTest {
     @Autowired
     UserRepository userRepository;
 
-    User userTest = User.builder()
-            .login("test")
-            .password("test_password")
-            .build();
-
-    Session sessionTest = Session.builder()
-            .user(userTest)
-            .expiresAt(LocalDateTime.of(2020, 1, 10, 15, 16, 17))
-            .build();
+    User userTest;
+    Session sessionTest;
 
 
     @BeforeEach
     void setUp() {
         userRepository.deleteAll();
+
+        userTest = User.builder()
+                .login("test")
+                .password("test_password")
+                .build();
+
+        sessionTest = Session.builder()
+                .user(userTest)
+                .expiresAt(LocalDateTime.of(2020, 1, 10, 15, 16, 17))
+                .build();
     }
 
 
     @Test
     void saveTest() {
-        userRepository.saveUser(userTest);
+        userRepository.save(userTest);
 
         Session save = sessionRepository.save(sessionTest);
 
@@ -61,7 +64,7 @@ class SessionRepositoryImplTest {
 
     @Test
     void findBySessionIdTest() {
-        userRepository.saveUser(userTest);
+        userRepository.save(userTest);
         Session save = sessionRepository.save(sessionTest);
 
         Optional<Session> result = sessionRepository.findBySessionId(save.getId());
@@ -82,7 +85,7 @@ class SessionRepositoryImplTest {
 
     @Test
     void removeTest() {
-        userRepository.saveUser(userTest);
+        userRepository.save(userTest);
         Session save = sessionRepository.save(sessionTest);
 
         sessionRepository.remove(save.getId());
@@ -94,7 +97,7 @@ class SessionRepositoryImplTest {
     @Test
     void removeTest_whenRemoveFailed() {
         UUID uuid = UUID.randomUUID();
-        userRepository.saveUser(userTest);
+        userRepository.save(userTest);
         Session save = sessionRepository.save(sessionTest);
 
         sessionRepository.remove(uuid);
@@ -105,7 +108,7 @@ class SessionRepositoryImplTest {
 
     @Test
     void hasSessionUserTest() {
-        userRepository.saveUser(userTest);
+        userRepository.save(userTest);
         sessionRepository.save(sessionTest);
 
         boolean result = sessionRepository.hasSessionUser(sessionTest);
@@ -120,4 +123,24 @@ class SessionRepositoryImplTest {
         assertFalse(result);
     }
 
+    @Test
+    void deleteExpiredSessionsTest() {
+        userRepository.save(userTest);
+        sessionRepository.save(sessionTest);
+
+        boolean result = sessionRepository.deleteExpiredSessions();
+
+        assertTrue(result);
+    }
+
+    @Test
+    void deleteExpiredSessions_NoDeletion() {
+        userRepository.save(userTest);
+        sessionTest.setExpiresAt(LocalDateTime.now().plusHours(2));
+        sessionRepository.save(sessionTest);
+
+        boolean result = sessionRepository.deleteExpiredSessions();
+
+        assertFalse(result);
+    }
 }

@@ -15,4 +15,6 @@ public interface SessionRepository {
     boolean hasSessionUser(Session session);
 
     void deleteAll();
+
+    boolean deleteExpiredSessions();
 }
