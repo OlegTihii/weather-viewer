@@ -62,6 +62,6 @@ public class UserRegistrationControllerImpl implements UserRegistrationControlle
 
         cookieConfig.createCookie(response, sessionToken.getId().toString());
 
-        return "homePage";
+        return "redirect:/";
     }
 }

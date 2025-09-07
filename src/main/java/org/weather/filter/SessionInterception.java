@@ -31,7 +31,7 @@ public class SessionInterception implements HandlerInterceptor {
         Cookie cookie = extractSessionCookie(request);
 
         if (cookie == null) {
-            response.sendRedirect("/login");
+            response.sendRedirect(request.getContextPath() + "/login");
             return true;
         }
 
