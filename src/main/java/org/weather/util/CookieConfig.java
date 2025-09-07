@@ -20,4 +20,12 @@ public class CookieConfig {
         cookie.setMaxAge(EXPIRATION);
         response.addCookie(cookie);
     }
+
+    public void deleteCookie(HttpServletResponse response) {
+                Cookie cookie = new Cookie(USER_SESSION, null);
+                cookie.setPath("/");
+                cookie.setHttpOnly(true);
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+    }
 }

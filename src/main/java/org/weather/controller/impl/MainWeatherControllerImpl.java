@@ -1,6 +1,7 @@
 package org.weather.controller.impl;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,7 +15,9 @@ import org.weather.controller.MainWeatherController;
 import org.weather.dto.LocationDto;
 import org.weather.dto.UserLocationsWeatherDto;
 import org.weather.service.LocationService;
+import org.weather.service.SessionService;
 import org.weather.service.WeatherFacadeService;
+import org.weather.util.CookieConfig;
 import org.weather.util.ExtractCookieUtil;
 
 import java.util.List;
@@ -25,11 +28,15 @@ import java.util.List;
 public class MainWeatherControllerImpl implements MainWeatherController {
     private final WeatherFacadeService weatherFacadeService;
     private final LocationService locationService;
+    private final SessionService sessionService;
+    private final CookieConfig cookieConfig;
 
     @Autowired
-    public MainWeatherControllerImpl(WeatherFacadeService weatherFacadeService, @Qualifier("locationServiceImpl") LocationService locationService) {
+    public MainWeatherControllerImpl(WeatherFacadeService weatherFacadeService, @Qualifier("locationServiceImpl") LocationService locationService, SessionService sessionService, CookieConfig cookieConfig) {
         this.weatherFacadeService = weatherFacadeService;
         this.locationService = locationService;
+        this.sessionService = sessionService;
+        this.cookieConfig = cookieConfig;
     }
 
     @Override
@@ -77,5 +84,18 @@ public class MainWeatherControllerImpl implements MainWeatherController {
 
         locationService.deleteLocation(cookie, lat, lon);
         return "redirect:/";
+    }
+
+    @Override
+    @PostMapping("/logout")
+    public String logoutUser(HttpServletRequest request, HttpServletResponse response) {
+        String cookie = ExtractCookieUtil.extractCookie(request)
+                .orElseThrow(() -> new IllegalStateException("Куки не найдена"));
+
+        sessionService.removeSession(cookie);
+
+        cookieConfig.deleteCookie(response);
+
+        return "redirect:/login";
     }
 }

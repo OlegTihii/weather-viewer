@@ -48,7 +48,7 @@ public class SessionServiceImpl implements SessionService {
         boolean present = bySessionId.filter(this::isSessionActive).isPresent();
 
         if (!present) {
-            removeSession(uuid);
+            removeSession(sessionId);
             return false;
         }
 
@@ -57,16 +57,16 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User findUserByIdSession(UUID idForSession) {
-        User user = sessionRepository.findBySessionId(idForSession).get().getUser();
-        log.info("findUserByIdSession {}", user);
-        return user;
+        return sessionRepository.findBySessionId(idForSession)
+                .map(Session::getUser)
+                .orElseThrow(() -> new IllegalStateException("Сессия не найдена"));
     }
 
-    public void removeSession(UUID uuid) {
-        log.info("removeSession {}", uuid);
-        sessionRepository.remove(uuid);
+    @Override
+    @Transactional
+    public void removeSession(String cookie) {
+        sessionRepository.remove(UUID.fromString(cookie));
     }
 
     private boolean isSessionActive(Session session) {

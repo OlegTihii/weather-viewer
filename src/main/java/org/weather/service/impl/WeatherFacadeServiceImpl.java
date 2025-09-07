@@ -3,6 +3,7 @@ package org.weather.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.weather.dto.LocationDto;
 import org.weather.dto.UserLocationsWeatherDto;
 import org.weather.dto.WeatherDto;
@@ -34,6 +35,7 @@ public class WeatherFacadeServiceImpl implements WeatherFacadeService {
 
     //todo Что-то часто запрос в БД с поиском Юзера то по id то по куки. Может его можно куда-то записать?
     @Override
+    @Transactional(readOnly = true)
     public List<LocationDto> getLocationsByCity(String userCookie, String city) {
         User user = sessionService.findUserByIdSession(UUID.fromString(userCookie));
         Set<Location> userLocations = user.getLocations();
@@ -57,6 +59,7 @@ public class WeatherFacadeServiceImpl implements WeatherFacadeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserLocationsWeatherDto getUserLocationsWeather(String cookie) {
         UUID idForSession = UUID.fromString(cookie);
 

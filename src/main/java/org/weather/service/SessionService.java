@@ -11,4 +11,6 @@ public interface SessionService {
     boolean validateSession(String sessionId);
 
     User findUserByIdSession(UUID idForSession);
+
+    void removeSession(String cookie);
 }

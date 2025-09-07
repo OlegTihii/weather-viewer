@@ -17,7 +17,9 @@
         <div class="d-flex align-items-center">
             <span class="navbar-text me-3" th:if="${user != null}" th:text="${user.username}">Гость</span>
             <span class="navbar-text me-3" th:if="${user == null}">Гость</span>
-            <button class="btn btn-outline-danger">Sign out</button>
+            <form th:action="@{/logout}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-outline-danger">Sign out</button>
+            </form>
         </div>
     </div>
 </nav>

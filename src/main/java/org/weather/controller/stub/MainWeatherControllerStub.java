@@ -1,6 +1,7 @@
 package org.weather.controller.stub;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +44,11 @@ public class MainWeatherControllerStub implements MainWeatherController {
 
     @Override
     public String deleteLocationFromUser(String lat, String lon, HttpServletRequest request) {
+        return "";
+    }
+
+    @Override
+    public String logoutUser(HttpServletRequest request, HttpServletResponse response) {
         return "";
     }
 
