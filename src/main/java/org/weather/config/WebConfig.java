@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
@@ -63,8 +63,8 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public WebClient webClient() {
-        return WebClient.builder()
+    public RestClient restClient() {
+        return RestClient.builder()
                 .baseUrl("https://api.openweathermap.org/")
                 .defaultHeader("Content-Type", "application/json")
                 .build();
