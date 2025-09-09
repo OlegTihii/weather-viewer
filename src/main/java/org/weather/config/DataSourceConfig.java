@@ -1,6 +1,7 @@
 package org.weather.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -11,13 +12,25 @@ import javax.sql.DataSource;
 @Slf4j
 public class DataSourceConfig {
 
+    @Value("${spring.datasource.url}")
+    String url;
+
+    @Value("${spring.datasource.username}")
+    String username;
+
+    @Value("${spring.datasource.password}")
+    String password;
+
+    @Value("${spring.datasource.driver-class-name}")
+    String driverClassName;
+
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
-        ds.setDriverClassName("org.postgresql.Driver");
-        ds.setUrl("jdbc:postgresql://localhost:5432/weather_db?characterEncoding=UTF-8&useUnicode=true");
-        ds.setUsername("postgres");
-        ds.setPassword("12345");
+        ds.setDriverClassName(driverClassName);
+        ds.setUrl(url);
+        ds.setUsername(username);
+        ds.setPassword(password);
         return ds;
     }
 }
