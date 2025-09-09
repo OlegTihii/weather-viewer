@@ -2,6 +2,7 @@ package org.weather.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -16,10 +17,12 @@ import java.util.List;
 @Slf4j
 public class ExternalWeatherServiceImpl implements ExternalWeatherService {
     private final RestClient restClient;
+    private final String apiKey;
 
     @Autowired
-    public ExternalWeatherServiceImpl(RestClient restClient) {
+    public ExternalWeatherServiceImpl(RestClient restClient, @Value("${weather.api.key}") String apiKey) {
         this.restClient = restClient;
+        this.apiKey = apiKey;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class ExternalWeatherServiceImpl implements ExternalWeatherService {
                         .path("/data/2.5/weather")
                         .queryParam("lat", location.getLatitude())
                         .queryParam("lon", location.getLongitude())
-                        .queryParam("appid", "19bc4504ecd219b17890ec5f31f655da")
+                        .queryParam("appid", apiKey)
                         .queryParam("units", "metric")
                         .build())
                 .retrieve()
@@ -49,7 +52,7 @@ public class ExternalWeatherServiceImpl implements ExternalWeatherService {
                         .path("/geo/1.0/direct")
                         .queryParam("q", city)
                         .queryParam("limit", 5)
-                        .queryParam("appid", "19bc4504ecd219b17890ec5f31f655da")
+                        .queryParam("appid", apiKey)
                         .queryParam("units", "metric")
                         .build())
                 .retrieve()
