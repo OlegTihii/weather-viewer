@@ -13,7 +13,6 @@ import org.weather.entity.User;
 import org.weather.mapper.LocationMapper;
 import org.weather.repository.LocationRepository;
 import org.weather.repository.SessionRepository;
-import org.weather.repository.UserRepository;
 import org.weather.service.LocationService;
 
 import java.math.BigDecimal;
@@ -38,8 +37,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     @Transactional(readOnly = true) //todo почему без него не работает??? Причем тут прокси?
     public List<Location> listLocationsByUserId(int id) {
-        return null;
-
+        return locationRepository.findAllByUserId(id);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.weather.service;
 
 import org.weather.dto.SessionDto;
+import org.weather.entity.Location;
 import org.weather.entity.User;
 
 import java.util.UUID;
@@ -15,4 +16,5 @@ public interface SessionService {
     void removeSession(String cookie);
 
     void deleteExpiredSessions();
+
 }

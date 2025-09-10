@@ -1,6 +1,7 @@
 package org.weather.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,10 +60,14 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findUserByIdSession(UUID idForSession) {
-        return sessionRepository.findBySessionId(idForSession)
+        User user = sessionRepository.findBySessionId(idForSession)
                 .map(Session::getUser)
                 .orElseThrow(() -> new IllegalStateException("Сессия не найдена"));
+        Hibernate.initialize(user);
+
+        return user;
     }
 
     @Override
