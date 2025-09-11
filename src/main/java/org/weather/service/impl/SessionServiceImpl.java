@@ -16,12 +16,10 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-//todo нужна помощь разобраться в @Transactional. Работает только когда ставлю над каждым методом, но говорят это не правильно!
-//todo зачем нужно постоянно ставить финал над полями? (идея намекает)
 @Service
 @Slf4j
 public class SessionServiceImpl implements SessionService {
-    private SessionRepository sessionRepository;
+    private final SessionRepository sessionRepository;
 
     @Autowired
     public SessionServiceImpl(SessionRepository sessionRepository) {

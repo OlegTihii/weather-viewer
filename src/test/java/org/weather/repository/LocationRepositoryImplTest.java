@@ -2,7 +2,6 @@ package org.weather.repository;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +14,7 @@ import org.weather.config.DataSourceTestConfig;
 import org.weather.config.HibernateTestConfig;
 import org.weather.entity.Location;
 import org.weather.entity.User;
+import org.weather.exceptions.LocationAlreadyExistException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -101,7 +101,7 @@ class LocationRepositoryImplTest {
         locationRepository.save(locationTest1);
         log.info("Тест на уникальные значения");
 
-        assertThrows(ConstraintViolationException.class, () -> locationRepository.save(uniqueLocation));
+        assertThrows(LocationAlreadyExistException.class, () -> locationRepository.save(uniqueLocation));
     }
 
     @Test

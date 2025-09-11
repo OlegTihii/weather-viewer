@@ -1,13 +1,11 @@
 package org.weather.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.ResourceTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.weather.dto.SessionDto;
 import org.weather.dto.UserDto;
 import org.weather.dto.UserLoginOrRegistrationDto;
@@ -22,36 +20,27 @@ import java.util.Optional;
 @Service("UserServiceImpl")
 @Slf4j
 public class UserServiceImpl implements UserService {
-    private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    //todo почему IDEA всегда хочет сделать поля final?
     private final UserRepository userRepository;
     private final SessionService sessionService;
-    //todo что это?
-    private final ResourceTransactionManager resourceTransactionManager;
-
+  //  private final TransactionTemplate transactionTemplate;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, SessionService sessionService, ResourceTransactionManager resourceTransactionManager) {
+    public UserServiceImpl(UserRepository userRepository, SessionService sessionService) {
         this.userRepository = userRepository;
         this.sessionService = sessionService;
-        this.resourceTransactionManager = resourceTransactionManager;
+     //   this.transactionTemplate = transactionTemplate;
     }
 
     //todo без transactional не работает. Опять прокси и прочая ересь
     @Override
-    @Transactional(readOnly = true)
     public UserDto checkLogin(UserLoginOrRegistrationDto userLoginOrRegistrationDto) {
-//        todo строка 40 и 49 дублируются. Стоит ли выносить в отдельный метод или использовать метод checkLogin и для метода регистрации?
-//        todo если из метода регистрации вызвать метод проверки то надо менять возвращаемый объект. Если его поменять, то логика отдачи ДТО в контроллер нарушается.
         Optional<User> byLogin = userRepository.findByLoginAndPassword(UserMapper.INSTANCE.toEntity(userLoginOrRegistrationDto));
-        log.info("checkLogin {}", byLogin.get());
         return byLogin.map(UserMapper.INSTANCE::toDto)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
     @Override
-    @Transactional
     public SessionDto registration(UserLoginOrRegistrationDto userLoginOrRegistrationDto) {
         User userEntity = UserMapper.INSTANCE.toEntity(userLoginOrRegistrationDto);
         Optional<User> byLoginAndPassword = userRepository.findByLoginAndPassword(userEntity);
@@ -60,9 +49,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalStateException("User already exists");
         }
 
-        //todo  смысл от хибернейта если не сохраняется в сущностях значения
         Optional<User> user = userRepository.save(userEntity);
-        LOGGER.info("UserServiceImpl | registration | {}", user);
 
         return sessionService.createSession(userEntity);
 
@@ -77,8 +64,6 @@ public class UserServiceImpl implements UserService {
         if (byLoginAndPassword.isEmpty()) {
             throw new UsernameNotFoundException("User not found");
         }
-        
-        log.info("authorisation {}", byLoginAndPassword.get());
 
         return sessionService.createSession(byLoginAndPassword.get());
     }
