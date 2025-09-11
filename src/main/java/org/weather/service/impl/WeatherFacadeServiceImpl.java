@@ -76,7 +76,7 @@ public class WeatherFacadeServiceImpl implements WeatherFacadeService {
         return coordinate.setScale(3, RoundingMode.HALF_UP);
     }
 
-    private void comparisonOfTheResult (List<LocationDto> searchLocationsResult, List<Location> locationList) {
+    private void comparisonOfTheResult(List<LocationDto> searchLocationsResult, List<Location> locationList) {
         for (LocationDto locationDto : searchLocationsResult) {
             BigDecimal latDto = roundToThreeDecimalPlaces(locationDto.getLat());
             BigDecimal lonDto = roundToThreeDecimalPlaces(locationDto.getLon());

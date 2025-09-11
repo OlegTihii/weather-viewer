@@ -18,9 +18,7 @@ public class LocationResultControllerStub implements SearchLocationResultControl
     }
 
     @Override
-    public String addLocation(String name, BigDecimal lat, BigDecimal lon, String country, HttpServletRequest request, Model model) {
+    public String addLocation(String name, BigDecimal lat, BigDecimal lon, String country, boolean alreadyAdded, HttpServletRequest request, Model model) {
         return "";
     }
-
-
 }
