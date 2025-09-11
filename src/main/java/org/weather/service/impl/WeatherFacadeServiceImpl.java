@@ -43,6 +43,40 @@ public class WeatherFacadeServiceImpl implements WeatherFacadeService {
 
         List<LocationDto> searchLocationsResult = externalWeatherService.getLocationsByCity(city);
 
+        comparisonOfTheResult(searchLocationsResult, locationList);
+
+        return searchLocationsResult;
+    }
+
+    @Override
+    public UserLocationsWeatherDto getUserLocationsWeather(String cookie) {
+        User user = sessionService.findUserByIdSession(UUID.fromString(cookie));
+        List<Location> listLocations = locationService.listLocationsByUserId(user.getId());
+
+        List<LocationDto> listDto = getListDto(listLocations);
+
+        return UserLocationsWeatherDto.builder()
+                .username(user.getLogin())
+                .locationList(listDto)
+                .build();
+    }
+
+    private List<LocationDto> getListDto(List<Location> listLocations) {
+        return listLocations.stream()
+                .map(location -> {
+                    LocationDto dto = LocationMapper.INSTANCE.toDto(location);
+                    WeatherDto weatherDto = externalWeatherService.getWeather(location);
+                    dto.setWeatherDto(weatherDto);
+                    return dto;
+                })
+                .toList();
+    }
+
+    private BigDecimal roundToThreeDecimalPlaces(BigDecimal coordinate) {
+        return coordinate.setScale(3, RoundingMode.HALF_UP);
+    }
+
+    private void comparisonOfTheResult (List<LocationDto> searchLocationsResult, List<Location> locationList) {
         for (LocationDto locationDto : searchLocationsResult) {
             BigDecimal latDto = roundToThreeDecimalPlaces(locationDto.getLat());
             BigDecimal lonDto = roundToThreeDecimalPlaces(locationDto.getLon());
@@ -56,33 +90,5 @@ public class WeatherFacadeServiceImpl implements WeatherFacadeService {
                 }
             }
         }
-
-        return searchLocationsResult;
-    }
-
-    @Override
-    public UserLocationsWeatherDto getUserLocationsWeather(String cookie) {
-        User user = sessionService.findUserByIdSession(UUID.fromString(cookie));
-        List<Location> listLocations = locationService.listLocationsByUserId(user.getId());
-        List<LocationDto> listDto = listLocations.stream()
-                .map(location -> {
-                    LocationDto dto = LocationMapper.INSTANCE.toDto(location);
-                    WeatherDto weatherDto = externalWeatherService.getWeather(location);
-                    dto.setWeatherDto(weatherDto);
-                    return dto;
-                })
-                .toList();
-
-        UserLocationsWeatherDto build = UserLocationsWeatherDto.builder()
-                .username(user.getLogin())
-                .locationList(listDto)
-                .build();
-
-        log.info("Watching {}", build);
-        return build;
-    }
-
-    private BigDecimal roundToThreeDecimalPlaces(BigDecimal coordinate) {
-        return coordinate.setScale(3, RoundingMode.HALF_UP);
     }
 }
