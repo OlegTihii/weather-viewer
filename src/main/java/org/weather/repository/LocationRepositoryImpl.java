@@ -3,11 +3,13 @@ package org.weather.repository;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.weather.entity.Location;
 import org.weather.entity.User;
+import org.weather.exceptions.LocationAlreadyExistException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -55,8 +57,12 @@ public class LocationRepositoryImpl implements LocationRepository {
 
     @Override
     public Optional<Location> save(Location location) {
-        getCurrentSession().persist(location);
-        return Optional.of(location);
+        try {
+            getCurrentSession().persist(location);
+            return Optional.of(location);
+        } catch (ConstraintViolationException e) {
+            throw new LocationAlreadyExistException("Локация уже добавлена");
+        }
     }
 
     @Override

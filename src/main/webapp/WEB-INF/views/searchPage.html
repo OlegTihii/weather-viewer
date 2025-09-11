@@ -50,7 +50,7 @@
                             <p class="card-text mb-1">Longitude: <span th:text="${location.lon}">0</span></p>
                             <p class="card-text mb-3">Country: <span th:text="${location.country}">Country</span></p>
 
-                            <!-- Если город уже добавлен -->
+                             Если город уже добавлен
                             <div th:if="${location.alreadyAdded}">
                                 <button type="button" class="btn btn-secondary w-100" disabled>Уже добавлен</button>
                             </div>
@@ -62,6 +62,7 @@
                                 <input type="hidden" name="lat"     th:value="${location.lat}" />
                                 <input type="hidden" name="lon"     th:value="${location.lon}" />
                                 <input type="hidden" name="country" th:value="${location.country}" />
+                                <input type="hidden" name="alreadyAdded" th:value="${location.alreadyAdded}" />
 
                                 <button type="submit" class="btn btn-primary w-100">Добавить</button>
                             </form>
@@ -77,6 +78,12 @@
         </div>
     </div>
 </section>
+
+<!-- Error message -->
+<div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <span th:text="${errorMessage}">Ошибка!</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 
 <!-- Footer -->
 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4 border-top">

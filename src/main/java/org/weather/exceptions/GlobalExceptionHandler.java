@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(LocationAlreadyExistException.class)
     public String handlerLocationAlreadyExist(LocationAlreadyExistException e,
                                               RedirectAttributes flash) {
-        flash.addAttribute("errorMessage", e.getMessage());
+        flash.addFlashAttribute("errorMessage", e.getMessage());
         return "redirect:/locations";
     }
 }

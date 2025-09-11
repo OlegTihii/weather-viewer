@@ -16,6 +16,7 @@ public interface SearchLocationResultController {
                        @RequestParam BigDecimal lat,
                        @RequestParam BigDecimal lon,
                        @RequestParam String country,
+                       @RequestParam boolean alreadyAdded,
                        HttpServletRequest request,
                        Model model);
 }

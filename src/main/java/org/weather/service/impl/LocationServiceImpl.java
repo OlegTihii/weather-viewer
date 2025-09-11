@@ -55,8 +55,6 @@ public class LocationServiceImpl implements LocationService {
         }
 
         User user = session.get().getUser();
-        log.info("addLocation {}", user.toString());
-
         Location location = LocationMapper.INSTANCE.toEntity(locationDto);
 
         location.setUser(user);
