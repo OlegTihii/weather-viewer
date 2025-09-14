@@ -1,8 +1,11 @@
 package org.weather.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -19,6 +22,7 @@ import org.weather.repository.UserRepositoryImpl;
 import org.weather.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {DataSourceTestConfig.class,
@@ -28,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         SessionServiceImpl.class,
         SessionRepositoryImpl.class,})
 @ActiveProfiles("test")
+@Slf4j
 class UserServiceImplTest {
 
     @Autowired
@@ -43,25 +48,40 @@ class UserServiceImplTest {
             .password("passwordTest")
             .build();
 
-//    @BeforeEach
-//    void setUp() {
-//
-//        userRepository.deleteAll();
-//    }
+    @BeforeEach
+    void setUp() {
+        userRepository.deleteAll();
+    }
+
+    @Test
+    void checkProxy() {
+        System.out.println("UserService bean class: " + userService.getClass());
+        log.info("proxy? {}", userService.getClass());
+    }
 
     @Test
     void checkLogin() {
+
         UserLoginOrRegistrationDto dto = UserLoginOrRegistrationDto.builder()
                 .username("loginTest")
                 .password("passwordTest")
                 .build();
 
-        UserDto result = transactionTemplate.execute(status -> {
-            userRepository.save(testUser);
-            return userService.checkLogin(dto);
-        });
+        userRepository.save(testUser);
+        UserDto result = userService.checkLogin(dto);
 
         assertNotNull(result);
+    }
+
+    @Test
+    void checkLogin_userDontFind() {
+
+        UserLoginOrRegistrationDto dto = UserLoginOrRegistrationDto.builder()
+                .username("loginTest")
+                .password("passwordTest")
+                .build();
+
+        assertThrows(UsernameNotFoundException.class, () -> userService.checkLogin(dto));
     }
 
     @Test
@@ -77,6 +97,38 @@ class UserServiceImplTest {
     }
 
     @Test
+    void registration_dontSuccess() {
+        UserLoginOrRegistrationDto userLocationsWeatherDto = UserLoginOrRegistrationDto.builder()
+                .username("loginTest")
+                .password("passwordTest")
+                .build();
+
+        userService.registration(userLocationsWeatherDto);
+
+        assertThrows(IllegalStateException.class, () -> userService.registration(userLocationsWeatherDto));
+    }
+
+    @Test
     void authorisation() {
+        UserLoginOrRegistrationDto userLocationsWeatherDto = UserLoginOrRegistrationDto.builder()
+                .username("loginTest")
+                .password("passwordTest")
+                .build();
+
+        userService.registration(userLocationsWeatherDto);
+
+        SessionDto result = userService.authorisation(userLocationsWeatherDto);
+
+        assertNotNull(result);
+    }
+
+    @Test
+    void authorisation_UserNameNotFound() {
+        UserLoginOrRegistrationDto userLocationsWeatherDto = UserLoginOrRegistrationDto.builder()
+                .username("loginTest")
+                .password("passwordTest")
+                .build();
+
+        assertThrows(UsernameNotFoundException.class, () -> userService.authorisation(userLocationsWeatherDto));
     }
 }

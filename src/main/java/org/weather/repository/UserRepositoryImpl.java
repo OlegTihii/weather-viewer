@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.weather.entity.User;
 
 import java.util.Optional;
@@ -15,10 +16,12 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository {
 
     private final SessionFactory sessionFactory;
+    private final TransactionTemplate transactionTemplate;
 
     @Autowired
-    public UserRepositoryImpl(SessionFactory sessionFactory) {
+    public UserRepositoryImpl(SessionFactory sessionFactory, TransactionTemplate transactionTemplate) {
         this.sessionFactory = sessionFactory;
+        this.transactionTemplate = transactionTemplate;
     }
 
     private Session getCurrentSession() {
@@ -43,17 +46,22 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> save (User user) {
-
-        Session session = getCurrentSession();
-        session.persist(user);
+    public Optional<User> save(User user) {
+        transactionTemplate.execute(status -> {
+            Session session = getCurrentSession();
+            session.persist(user);
+            return user;
+        });
 
         return Optional.of(user);
     }
 
     public void deleteAll() {
-        Session session = getCurrentSession();
-        session.createMutationQuery("DELETE FROM User").executeUpdate();
-        session.createNativeMutationQuery("ALTER TABLE users ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        transactionTemplate.execute(status -> {
+            Session session = getCurrentSession();
+            session.createMutationQuery("DELETE FROM User").executeUpdate();
+            session.createNativeMutationQuery("ALTER TABLE users ALTER COLUMN id RESTART WITH 1").executeUpdate();
+            return null;
+        });
     }
 }
